@@ -1,0 +1,28 @@
+DeepSeekWidget/
+├── app/
+│   └── src/
+│       └── main/
+│           ├── java/                           ← Kotlin code lives here
+│           │   └── com/yourdomain/deepseekwidget/
+│           │       └── DeepSeekWidgetProvider.kt
+│           ├── res/                            ← All resources live here
+│           │   ├── drawable/
+│           │   │   ├── ic_deepseek_whale.xml
+│           │   │   ├── ic_mic.xml
+│           │   │   └── widget_background.xml
+│           │   ├── layout/
+│           │   │   └── deepseek_widget.xml
+│           │   ├── values/
+│           │   │   └── themes.xml
+│           │   └── xml/
+│           │       └── deepseek_widget_info.xml
+│           └── AndroidManifest.xml
+├── gradle/
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── settings.gradle.kts          ← You may still need this
+├── build.gradle.kts             ← (project‑level)
+├── gradlew
+├── gradlew.bat                  ← You may still miss this
+└── ... (auto‑generated folders like .idea, .gradle)
