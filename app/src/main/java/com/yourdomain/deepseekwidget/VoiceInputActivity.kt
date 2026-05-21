@@ -19,8 +19,12 @@ class VoiceInputActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         val skipVoice = intent.getBooleanExtra("SKIP_VOICE", false)
+        val launchCamera = intent.getBooleanExtra("LAUNCH_CAMERA", false)
 
-        if (skipVoice) {
+        if (skipVoice || launchCamera) {
+            // If camera is requested, we still just open the app for now
+            // as specific camera deep links for DeepSeek are not widely documented.
+            // But we could potentially try a specific URI if one is found.
             openDeepSeek(null)
             return
         }

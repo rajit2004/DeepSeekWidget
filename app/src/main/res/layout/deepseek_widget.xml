@@ -2,36 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/widget_background"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="12dp">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:contentDescription="@string/content_desc_deepseek"
-        android:src="@drawable/ic_deepseek_whale" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+    <!-- Top Row: Logo and "Chat" -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/widget_placeholder"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/mic_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/content_desc_voice"
-        android:src="@drawable/ic_mic" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/content_desc_deepseek"
+            android:src="@drawable/ic_deepseek_whale" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/chat"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Horizontal Divider (Using ImageView as View is not supported in RemoteViews) -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#33FFFFFF"
+        android:importantForAccessibility="no" />
+
+    <!-- Bottom Row: Camera and Mic -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/camera_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_desc_camera"
+            android:scaleType="center"
+            android:src="@drawable/ic_camera" />
+
+        <!-- Vertical Divider -->
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:background="#33FFFFFF"
+            android:importantForAccessibility="no" />
+
+        <ImageButton
+            android:id="@+id/mic_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/content_desc_voice"
+            android:scaleType="center"
+            android:src="@drawable/ic_mic" />
+
+    </LinearLayout>
 
 </LinearLayout>

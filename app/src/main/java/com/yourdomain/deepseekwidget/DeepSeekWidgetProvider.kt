@@ -51,6 +51,16 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             )
             views.setOnClickPendingIntent(R.id.mic_button, voicePendingIntent)
 
+            // ── Camera button ──
+            val cameraIntent = Intent(context, VoiceInputActivity::class.java).apply {
+                putExtra("LAUNCH_CAMERA", true)
+            }
+            val cameraPendingIntent = PendingIntent.getActivity(
+                context, 2, cameraIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.camera_button, cameraPendingIntent)
+
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
