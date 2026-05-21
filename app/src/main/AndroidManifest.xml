@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yourdomain.deepseekwidget">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="DeepSeek Widget"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DeepSeekWidget">
+
+        <receiver
+            android:name=".DeepSeekWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/deepseek_widget_info" />
+        </receiver>
+
+    </application>
+</manifest>
