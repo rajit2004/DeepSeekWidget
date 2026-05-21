@@ -1,34 +1,31 @@
-# 🐳 DeepSeekWidget
+# 🐳 DeepSeekWidget – One‑Tap AI Access
 
-> An open-source Android home screen widget for one-tap access to DeepSeek — ask anything, use voice, without unlocking the app.
+> An open‑source Android home screen widget that gives you instant access to DeepSeek — ask anything, use voice, without unlocking the app.
 
-[![Status](https://img.shields.io/badge/Status-In%20Development-orange?style=flat)](https://github.com/rajit2004/DeepSeekWidget)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat&logo=android)](https://github.com/rajit2004/DeepSeekWidget)
-[![Kotlin](https://img.shields.io/badge/Kotlin-1.9%2B-7F52FF?style=flat&logo=kotlin)](https://github.com/rajit2004/DeepSeekWidget)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)](LICENSE)
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/rajit2004?style=flat&logo=githubsponsors&color=EA4AAA)](https://github.com/sponsors/rajit2004)
-
----
-
-## 📌 About This Project
-
-This is an **open-source contribution** to the DeepSeek community — a feature request and working proof-of-concept for an official Android home screen widget for the DeepSeek app.
-
-The goal is simple: eliminate the friction of opening an AI assistant. One tap on the widget, and you're in the chat. No unlocking, no navigation, no delay.
-
-> ⚠️ **This project is currently under active development.** It is not yet released or available for download. Contributions, feedback, and feature suggestions are welcome.
+[![GitHub release](https://img.shields.io/github/v/release/rajit2004/DeepSeekWidget?style=for-the-badge&logo=android&color=00D4AA)](https://github.com/rajit2004/DeepSeekWidget/releases)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/rajit2004?style=for-the-badge&logo=githubsponsors&color=EA4AAA)](https://github.com/sponsors/rajit2004)
+![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat&logo=android)
+![Kotlin](https://img.shields.io/badge/Kotlin-1.9%2B-purple?style=flat&logo=kotlin)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)
 
 ---
 
-## 🚀 Planned Features
+## 📱 Download & Install
 
-- 🏠 **One-tap chat access** — open DeepSeek directly from the home screen widget
-- 🎤 **Voice button** — trigger voice input instantly, no keyboard required
-- 🎨 **Material You design** — adapts automatically to light/dark system theme
-- 🐋 **DeepSeek branding** — uses the iconic whale and teal accent
-- 📦 **Lightweight** — zero background services, minimal permissions
-- 🔧 **Extensible** — easy to add custom prompt buttons or deep-links
-- 🕊️ **Open source** — built for the community, free to fork and modify
+[![Get it on GitHub](https://img.shields.io/badge/Get%20APK-Releases-blue?style=for-the-badge&logo=github)](https://github.com/rajit2004/DeepSeekWidget/releases)
+
+> ✅ **First release is live!**  
+> Download the signed APK from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases), install it on your Android 8.0+ device, and add the widget to your home screen.
+
+---
+
+## 🚀 Features (What works now)
+
+- 🏠 **One‑tap chat access** – open DeepSeek (app or web) directly from the widget
+- 🎤 **Voice button** – tap the mic, speak your question, and DeepSeek opens automatically with your input
+- 🎨 **Material You design** – adapts to light/dark system theme, uses DeepSeek's teal accent
+- 📦 **Lightweight** – zero background services, minimal permissions
+- 🕊️ **Open source** – built for the community, free to fork and modify
 
 ---
 
@@ -36,25 +33,25 @@ The goal is simple: eliminate the friction of opening an AI assistant. One tap o
 
 ```
 User taps widget on home screen
-        ↓
+↓
 PendingIntent fires → DeepSeek app or web opens
-        ↓
+↓
 User asks question → AI responds instantly
 
-(Optional) Tap mic button → voice intent fires immediately
+Mic button → voice recognition activity → spoken text sent to DeepSeek
 ```
 
 **Widget Logic:**
-- Built as a standard `AppWidgetProvider` using `RemoteViews`
-- Click listeners attach `PendingIntent`s for open-chat and voice-command actions
-- No background processes — purely a shortcut layer
+- The widget is a standard `AppWidgetProvider` using `RemoteViews`
+- Click listeners attach `PendingIntent`s for chat and voice actions
+- A transparent trampoline `Activity` handles voice recognition and then redirects to DeepSeek
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
-|-------|------------|
+|---|---|
 | Language | Kotlin 1.9+ |
 | UI | XML (RemoteViews) |
 | Build System | Gradle (KTS) |
@@ -70,11 +67,12 @@ DeepSeekWidget/
 ├── app/
 │   ├── src/main/
 │   │   ├── java/com/yourdomain/deepseekwidget/
-│   │   │   └── DeepSeekWidgetProvider.kt
+│   │   │   ├── DeepSeekWidgetProvider.kt
+│   │   │   └── VoiceInputActivity.kt
 │   │   ├── res/
 │   │   │   ├── drawable/         # ic_deepseek_whale, ic_mic, widget_background
 │   │   │   ├── layout/           # deepseek_widget.xml
-│   │   │   ├── values/           # themes.xml
+│   │   │   ├── values/           # colors.xml, strings.xml, themes.xml
 │   │   │   └── xml/              # deepseek_widget_info.xml
 │   │   └── AndroidManifest.xml
 │   └── build.gradle.kts
@@ -96,7 +94,7 @@ git clone https://github.com/rajit2004/DeepSeekWidget.git
 # Open in Android Studio and let Gradle sync
 # Then either:
 #   Build APK → Build → Build Bundle(s)/APK → Build APK
-#   Or run directly on a connected device via Run
+#   Or run directly on a connected device
 
 # CLI build
 ./gradlew assembleDebug
@@ -104,18 +102,21 @@ git clone https://github.com/rajit2004/DeepSeekWidget.git
 
 Output APK: `app/build/outputs/apk/debug/`
 
+For a signed release APK (like the one on GitHub Releases), use:  
+**Build → Generate Signed Bundle / APK → APK → Create new keystore** and follow the steps.
+
 ---
 
 ## 🤝 Contributing
 
-This project is an open contribution to the DeepSeek ecosystem. If you'd like to help build it:
+This project is an open contribution to the DeepSeek ecosystem. If you'd like to help improve it:
 
 1. Fork the repo
 2. Create a feature branch — `git checkout -b feature/your-idea`
 3. Commit your changes — `git commit -m "Add: your feature"`
 4. Push and open a Pull Request
 
-All contributions, issues, and feature requests are welcome.
+All contributions, issues, and feature suggestions are welcome.
 
 ---
 
@@ -138,8 +139,7 @@ Everything here is free and open source. If this inspires your own project or sa
 
 ## 📄 License
 
-Licensed under the [MIT License](LICENSE). Free to use, modify, and distribute with attribution.
+Licensed under the [MIT License](LICENSE) — see the `LICENSE` file for details.  
+Free to use, modify, and distribute with attribution.
 
----
-
-> *This is an independent open-source project and is not officially affiliated with or endorsed by DeepSeek.*
+> This is an independent open‑source project and is not officially affiliated with or endorsed by DeepSeek.
