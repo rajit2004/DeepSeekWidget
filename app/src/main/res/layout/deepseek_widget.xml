@@ -30,9 +30,8 @@
         android:id="@+id/mic_button"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/content_desc_voice"
-        android:src="@drawable/ic_mic"
-        android:tint="@color/white" />
+        android:src="@drawable/ic_mic" />
 
 </LinearLayout>

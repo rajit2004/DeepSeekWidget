@@ -18,6 +18,13 @@ class VoiceInputActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val skipVoice = intent.getBooleanExtra("SKIP_VOICE", false)
+
+        if (skipVoice) {
+            openDeepSeek(null)
+            return
+        }
+
         // Start voice recognition immediately
         val speechIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -46,19 +53,45 @@ class VoiceInputActivity : Activity() {
     }
 
     private fun openDeepSeek(query: String?) {
-        val uri = if (query.isNullOrBlank()) {
-            Uri.parse("deepseek://chat")
-        } else {
-            Uri.parse("deepseek://chat?query=${Uri.encode(query)}")
+        try {
+            val launchIntent = packageManager.getLaunchIntentForPackage(DEEPSEEK_PACKAGE)
+            if (launchIntent != null) {
+                // If we have a query, we can try to pass it as a web link to the app
+                // DeepSeek app handles chat.deepseek.com links
+                if (!query.isNullOrBlank()) {
+                    val uri = Uri.parse("https://chat.deepseek.com/?query=${Uri.encode(query)}")
+                    val deepLinkIntent = Intent(Intent.ACTION_VIEW, uri)
+                    deepLinkIntent.setPackage(DEEPSEEK_PACKAGE)
+                    try {
+                        startActivity(deepLinkIntent)
+                    } catch (e: Exception) {
+                        // If deep link fails, just launch the app normally
+                        startActivity(launchIntent)
+                    }
+                } else {
+                    startActivity(launchIntent)
+                }
+            } else {
+                launchWebFallback(query)
+            }
+        } catch (e: Exception) {
+            launchWebFallback(query)
         }
-        val deepseekIntent = if (isPackageInstalled(DEEPSEEK_PACKAGE)) {
-            Intent(Intent.ACTION_VIEW, uri)
-        } else {
-            // fallback to web chat with optional query (currently DeepSeek web doesn't support query param, so just open homepage)
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://chat.deepseek.com"))
-        }
-        startActivity(deepseekIntent)
         finish()
+    }
+
+    private fun launchWebFallback(query: String? = null) {
+        try {
+            val url = if (query.isNullOrBlank()) {
+                "https://chat.deepseek.com"
+            } else {
+                "https://chat.deepseek.com/?query=${Uri.encode(query)}"
+            }
+            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(webIntent)
+        } catch (e: Exception) {
+            // If even the browser fails, we just finish
+        }
     }
 
     private fun isPackageInstalled(packageName: String): Boolean {

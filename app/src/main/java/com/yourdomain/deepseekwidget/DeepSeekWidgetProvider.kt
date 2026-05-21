@@ -32,10 +32,10 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.deepseek_widget)
 
             // ── Main tap – opens DeepSeek app (or web fallback) ──
-            val openIntent = if (isPackageInstalled(context, DEEPSEEK_PACKAGE)) {
-                Intent(Intent.ACTION_VIEW, Uri.parse("deepseek://chat"))
-            } else {
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://chat.deepseek.com"))
+            // We use the trampoline activity for the main tap too, to ensure consistent fallback logic and crash protection
+            val openIntent = Intent(context, VoiceInputActivity::class.java).apply {
+                // We'll tell VoiceInputActivity NOT to trigger voice recognition, just open the app
+                putExtra("SKIP_VOICE", true)
             }
             val openPendingIntent = PendingIntent.getActivity(
                 context, 0, openIntent,
