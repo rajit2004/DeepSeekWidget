@@ -36,30 +36,42 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             val openIntent = Intent(context, VoiceInputActivity::class.java).apply {
                 // We'll tell VoiceInputActivity NOT to trigger voice recognition, just open the app
                 putExtra("SKIP_VOICE", true)
+                // Force a unique identity for the Intent to avoid PendingIntent caching
+                data = Uri.parse("widget://main/$appWidgetId")
             }
             val openPendingIntent = PendingIntent.getActivity(
-                context, 0, openIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                context, appWidgetId * 10, openIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_root, openPendingIntent)
 
             // ── Mic button – launches a trampoline activity that starts voice recognition ──
-            val voiceIntent = Intent(context, VoiceInputActivity::class.java)
+            val voiceIntent = Intent(context, VoiceInputActivity::class.java).apply {
+                // Force a unique identity
+                data = Uri.parse("widget://mic/$appWidgetId")
+            }
             val voicePendingIntent = PendingIntent.getActivity(
-                context, 1, voiceIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                context, appWidgetId * 10 + 1, voiceIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.mic_button, voicePendingIntent)
 
             // ── Camera button ──
             val cameraIntent = Intent(context, VoiceInputActivity::class.java).apply {
                 putExtra("LAUNCH_CAMERA", true)
+                // Force a unique identity
+                data = Uri.parse("widget://camera/$appWidgetId")
             }
             val cameraPendingIntent = PendingIntent.getActivity(
-                context, 2, cameraIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                context, appWidgetId * 10 + 2, cameraIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.camera_button, cameraPendingIntent)
+
+            // ── Set tints programmatically for reliable rendering ──
+            val teal = 0xFF00D4AA.toInt()
+            views.setInt(R.id.camera_button, "setColorFilter", teal)
+            views.setInt(R.id.mic_button, "setColorFilter", teal)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
