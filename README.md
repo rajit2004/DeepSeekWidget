@@ -12,17 +12,24 @@
 
 ## 📱 Download & Install
 
-[![Get it on GitHub](https://img.shields.io/badge/Get%20APK-Releases-blue?style=for-the-badge&logo=github)](https://github.com/rajit2004/DeepSeekWidget/releases)
+[![Get it on GitHub](https://img.shields.io/badge/Get%20APK-v1.0%20Release-blue?style=for-the-badge&logo=github)](https://github.com/rajit2004/DeepSeekWidget/releases/tag/v1.0)
 
-> ✅ **First release is live!**  
-> Download the signed APK from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases), install it on your Android 8.0+ device, and add the widget to your home screen.
+> ✅ **v1.0 is live!** A signed `app-release.apk` (4.3 MB) is available on the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
+
+**Installation steps:**
+
+1. Download `app-release.apk` from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases)
+2. Install it on your phone — you may need to allow **"Install from unknown sources"**
+3. Long-press your home screen → **Widgets** → **DeepSeek Widget**
+
+> 💡 This is a signed release APK. The full source code is available in this repository.
 
 ---
 
-## 🚀 Features (What works now)
+## 🚀 Features
 
 - 🏠 **One‑tap chat access** – open DeepSeek (app or web) directly from the widget
-- 🎤 **Voice button** – tap the mic, speak your question, and DeepSeek opens automatically with your input
+- 🎤 **Voice button** – tap the mic, speak your question, and DeepSeek opens automatically with your input (trampoline activity for voice recognition)
 - 🎨 **Material You design** – adapts to light/dark system theme, uses DeepSeek's teal accent
 - 📦 **Lightweight** – zero background services, minimal permissions
 - 🕊️ **Open source** – built for the community, free to fork and modify
@@ -65,22 +72,31 @@ Mic button → voice recognition activity → spoken text sent to DeepSeek
 ```
 DeepSeekWidget/
 ├── app/
-│   ├── src/main/
-│   │   ├── java/com/yourdomain/deepseekwidget/
-│   │   │   ├── DeepSeekWidgetProvider.kt
-│   │   │   └── VoiceInputActivity.kt
-│   │   ├── res/
-│   │   │   ├── drawable/         # ic_deepseek_whale, ic_mic, widget_background
-│   │   │   ├── layout/           # deepseek_widget.xml
-│   │   │   ├── values/           # colors.xml, strings.xml, themes.xml
-│   │   │   └── xml/              # deepseek_widget_info.xml
-│   │   └── AndroidManifest.xml
-│   └── build.gradle.kts
-├── screenshots/
-├── build.gradle.kts
+│   └── src/
+│       └── main/
+│           ├── java/                        ← Kotlin code lives here
+│           │   └── com/yourdomain/deepseekwidget/
+│           │       └── DeepSeekWidgetProvider.kt
+│           ├── res/                         ← All resources live here
+│           │   ├── drawable/
+│           │   │   ├── ic_deepseek_whale.xml
+│           │   │   ├── ic_mic.xml
+│           │   │   └── widget_background.xml
+│           │   ├── layout/
+│           │   │   └── deepseek_widget.xml
+│           │   ├── values/
+│           │   │   └── themes.xml
+│           │   └── xml/
+│           │       └── deepseek_widget_info.xml
+│           └── AndroidManifest.xml
+├── gradle/
+│   └── wrapper/
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── build.gradle.kts                         ← Project-level
 ├── settings.gradle.kts
-├── .gitignore
-└── README.md
+├── gradlew
+└── gradlew.bat
 ```
 
 ---
@@ -104,6 +120,19 @@ Output APK: `app/build/outputs/apk/debug/`
 
 For a signed release APK (like the one on GitHub Releases), use:  
 **Build → Generate Signed Bundle / APK → APK → Create new keystore** and follow the steps.
+
+---
+
+## 📋 Changelog
+
+### v1.0 — First Release *(Pre-release)*
+- ✅ One-tap home screen widget to open DeepSeek
+- ✅ Voice input button with trampoline activity for voice recognition
+- ✅ Material You design with DeepSeek teal accent
+- ✅ Supports Android 8.0 and above
+- ✅ Signed APK release
+
+Full commit history: [commits/v1.0](https://github.com/rajit2004/DeepSeekWidget/commits/v1.0)
 
 ---
 
