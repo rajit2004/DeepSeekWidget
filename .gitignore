@@ -1,26 +1,57 @@
-# Gradle
-.gradle/
-build/
-*/build/
+# ============================================================
+#  DeepSeekWidget — .gitignore
+# ============================================================
 
-# IDE
+# ── Android Studio / IntelliJ IDEA ──────────────────────────
 .idea/
 *.iml
 *.iws
 *.ipr
-
-# Local configuration
-local.properties
-*.log
-*.tmp
-
-# Android Studio misc
-ProjectStructure/
-*.apk
-*.aab
-*.dex
-*.class
-
-# OS files
 .DS_Store
 Thumbs.db
+
+# ── Gradle build outputs ─────────────────────────────────────
+.gradle/
+build/
+app/build/
+**/build/
+
+# ── Local config (machine-specific, never commit) ────────────
+local.properties
+keystore.properties
+
+# ── Signing / Keystore files ─────────────────────────────────
+*.jks
+*.keystore
+*.p12
+
+# ── Generated APKs & Bundles ─────────────────────────────────
+*.apk
+*.aab
+
+# ── Proguard generated files ─────────────────────────────────
+app/proguard-rules.pro.bak
+*.map
+
+# ── Navigation & code gen ────────────────────────────────────
+app/src/main/java/com/yourdomain/deepseekwidget/NavGraph.kt
+
+# ── Kotlin incremental compilation cache ─────────────────────
+**/.kotlin/
+
+# ── Lint & test outputs ──────────────────────────────────────
+lint-results*
+lint-baseline.xml
+app/lint-baseline.xml
+**/test-results/
+**/reports/
+
+# ── OS junk ──────────────────────────────────────────────────
+.DS_Store
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+
+# ── Captured output / logs ───────────────────────────────────
+*.log
+captures/
