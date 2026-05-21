@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yourdomain.deepseekwidget">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -19,6 +18,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/deepseek_widget_info" />
         </receiver>
+
+        <!-- Trampoline activity for voice input -->
+        <activity
+            android:name=".VoiceInputActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
     </application>
 </manifest>
