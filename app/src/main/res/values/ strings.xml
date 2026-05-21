@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DeepSeek Widget</string>
+    <string name="widget_placeholder">Ask DeepSeek anything…</string>
+    <string name="content_desc_deepseek">DeepSeek</string>
+    <string name="content_desc_voice">Voice input</string>
+</resources>
