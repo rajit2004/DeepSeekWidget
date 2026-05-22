@@ -22,6 +22,7 @@ keystore.properties
 *.jks
 *.keystore
 *.p12
+*.hprof
 
 # ── Generated APKs & Bundles ─────────────────────────────────
 *.apk
