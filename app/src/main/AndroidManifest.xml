@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Dangerous permissions — requested at runtime in VoiceInputActivity -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <!--
+        Package visibility (Android 11+):
+        Declare all implicit intent targets so PackageManager can resolve them.
+    -->
     <queries>
+        <!-- DeepSeek app -->
         <package android:name="com.deepseek.chat" />
+        <!-- Camera apps -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <!-- Speech recogniser apps -->
+        <intent>
+            <action android:name="android.speech.action.RECOGNIZE_SPEECH" />
+        </intent>
     </queries>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_deepseek_whale"
-        android:label="DeepSeek Widget"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepSeekWidget">
 
+        <!-- Widget provider -->
         <receiver
             android:name=".DeepSeekWidgetProvider"
             android:exported="true">
@@ -27,15 +42,24 @@
                 android:resource="@xml/deepseek_widget_info" />
         </receiver>
 
-        <!-- Trampoline activity for voice input and camera -->
+        <!--
+            Transparent trampoline activity for voice recognition and camera capture.
+            Uses an AppCompat-compatible transparent theme (required since the
+            activity now extends AppCompatActivity).
+        -->
         <activity
             android:name=".VoiceInputActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/Theme.DeepSeekWidget.Transparent" />
 
+        <!--
+            FileProvider for sharing camera images.
+            authority uses ${applicationId} placeholder so it automatically
+            matches BuildConfig.APPLICATION_ID used in code.
+        -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.yourdomain.deepseekwidget.fileprovider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

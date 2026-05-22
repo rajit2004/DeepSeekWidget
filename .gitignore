@@ -7,8 +7,6 @@
 *.iml
 *.iws
 *.ipr
-.DS_Store
-Thumbs.db
 
 # ── Gradle build outputs ─────────────────────────────────────
 .gradle/
@@ -16,7 +14,7 @@ build/
 app/build/
 **/build/
 
-# ── Local config (machine-specific, never commit) ────────────
+# ── Local config (machine-specific, NEVER commit) ────────────
 local.properties
 keystore.properties
 
@@ -29,14 +27,7 @@ keystore.properties
 *.apk
 *.aab
 
-# ── Proguard generated files ─────────────────────────────────
-app/proguard-rules.pro.bak
-*.map
-
-# ── Navigation & code gen ────────────────────────────────────
-app/src/main/java/com/yourdomain/deepseekwidget/NavGraph.kt
-
-# ── Kotlin incremental compilation cache ─────────────────────
+# ── Kotlin incremental compilation ───────────────────────────
 **/.kotlin/
 
 # ── Lint & test outputs ──────────────────────────────────────
@@ -52,6 +43,6 @@ Desktop.ini
 Thumbs.db
 ehthumbs.db
 
-# ── Captured output / logs ───────────────────────────────────
+# ── Logs ─────────────────────────────────────────────────────
 *.log
 captures/

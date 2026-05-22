@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Base app theme -->
     <style name="Theme.DeepSeekWidget" parent="Theme.AppCompat.DayNight.NoActionBar" />
+
+    <!--
+        Transparent theme for VoiceInputActivity.
+
+        Must extend an AppCompat theme because VoiceInputActivity extends
+        AppCompatActivity. The platform theme @android:style/Theme.Translucent
+        cannot be used with AppCompatActivity — it throws:
+        "You need to use a Theme.AppCompat theme (or descendant) with this activity."
+    -->
+    <style name="Theme.DeepSeekWidget.Transparent" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
 </resources>

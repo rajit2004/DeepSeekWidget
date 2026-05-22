@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- Top Row: Logo and "Chat" -->
+    <!-- Top Row: Logo and "Chat" label -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -32,16 +32,16 @@
 
     </LinearLayout>
 
-    <!-- Horizontal Divider (Using ImageView as View is not supported in RemoteViews) -->
+    <!-- Horizontal divider (ImageView used instead of View — View is not supported in RemoteViews) -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="#33FFFFFF"
         android:importantForAccessibility="no" />
 
-    <!-- Bottom Row: Camera and Mic -->
+    <!-- Bottom Row: Camera and Mic buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -59,7 +59,7 @@
             android:scaleType="center"
             android:src="@drawable/ic_camera" />
 
-        <!-- Vertical Divider -->
+        <!-- Vertical divider -->
         <ImageView
             android:layout_width="1dp"
             android:layout_height="24dp"

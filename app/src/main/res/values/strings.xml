@@ -2,9 +2,29 @@
 <resources>
     <string name="app_name">DeepSeek Widget</string>
     <string name="widget_placeholder">Ask DeepSeek anything…</string>
-    <string name="content_desc_deepseek">DeepSeek</string>
-    <string name="content_desc_voice">Voice input</string>
     <string name="widget_description">One‑tap access to DeepSeek AI chat</string>
     <string name="chat">Chat</string>
-    <string name="content_desc_camera">Camera</string>
+
+    <!-- Content descriptions for accessibility / TalkBack -->
+    <string name="content_desc_deepseek">DeepSeek logo</string>
+    <string name="content_desc_voice">Start voice input</string>
+    <string name="content_desc_camera">Open camera</string>
+
+    <!-- Voice recognition -->
+    <string name="voice_prompt">Speaking to DeepSeek…</string>
+    <string name="voice_unavailable">Voice input is not available on this device</string>
+
+    <!-- Camera -->
+    <string name="camera_unavailable">Camera is not available on this device</string>
+    <string name="camera_file_error">Could not create image file. Please try again.</string>
+
+    <!-- Permissions -->
+    <string name="perm_camera_denied">Camera permission is required to use this feature</string>
+    <string name="perm_audio_denied">Microphone permission is required for voice input</string>
+
+    <!-- DeepSeek launch / sharing -->
+    <string name="deepseek_open_error">Could not open DeepSeek. Please install the app or check your browser.</string>
+    <string name="deepseek_web_fallback">DeepSeek app not found — opened web chat instead</string>
+    <string name="image_file_error">Image capture failed. Please try again.</string>
+    <string name="image_share_error">Could not share image to DeepSeek. Please install the DeepSeek app.</string>
 </resources>
