@@ -33,6 +33,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
             // NOTE: signingConfig is NOT set here intentionally.
             // The debug keystore must NOT be used for a public/Play Store release.
             // To sign a release APK:

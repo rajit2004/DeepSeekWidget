@@ -1,12 +1,11 @@
 package com.yourdomain.deepseekwidget
 
-//import com.yourdomain.deepseekwidget.BuildConfig
-import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.RECORD_AUDIO
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -18,7 +17,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_PACKAGE
+import com.yourdomain.deepseekwidget.Constants.FILE_PROVIDER_AUTHORITY
 import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_WEB_URL
 import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_CAMERA
 import com.yourdomain.deepseekwidget.Constants.EXTRA_SKIP_VOICE
@@ -34,7 +35,7 @@ import java.util.Locale
  *
  * Handles three flows:
  *  1. **Open** (`EXTRA_SKIP_VOICE = true`) — launches DeepSeek directly.
- *  2. **Voice** (default) — requests [RECORD_AUDIO], fires speech recogniser,
+ *  2. **Voice** (default) — requests [RECORD_AUDIO], fires speech recognizer,
  *     forwards transcript to DeepSeek.
  *  3. **Camera** (`EXTRA_LAUNCH_CAMERA = true`) — requests [CAMERA], captures
  *     image via [FileProvider], shares to DeepSeek.
@@ -64,9 +65,8 @@ class VoiceInputActivity : AppCompatActivity() {
     private val cameraPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        if (granted) {
-            dispatchTakePictureIntent()
-        } else {
+        if (granted) dispatchTakePictureIntent()
+        else {
             showToast(R.string.perm_camera_denied)
             finish()
         }
@@ -75,9 +75,8 @@ class VoiceInputActivity : AppCompatActivity() {
     private val audioPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        if (granted) {
-            startVoiceRecognition()
-        } else {
+        if (granted) startVoiceRecognition()
+        else {
             showToast(R.string.perm_audio_denied)
             finish()
         }
@@ -105,23 +104,17 @@ class VoiceInputActivity : AppCompatActivity() {
     // ── Permission gates ──────────────────────────────────────────────────────
 
     private fun checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(this, CAMERA) == PackageManager.PERMISSION_GRANTED)
             dispatchTakePictureIntent()
-        } else {
-            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }
+        else
+            cameraPermissionLauncher.launch(CAMERA)
     }
 
     private fun checkAudioPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(this, RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)
             startVoiceRecognition()
-        } else {
-            audioPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
-        }
+        else
+            audioPermissionLauncher.launch(RECORD_AUDIO)
     }
 
     // ── Voice recognition ─────────────────────────────────────────────────────
@@ -133,7 +126,7 @@ class VoiceInputActivity : AppCompatActivity() {
             putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_prompt))
         }
         if (speechIntent.resolveActivity(packageManager) == null) {
-            Log.w(TAG, "No speech recogniser available on this device")
+            Log.w(TAG, "No speech recognizer available on this device")
             showToast(R.string.voice_unavailable)
             openDeepSeek(query = null)
             return
@@ -141,14 +134,14 @@ class VoiceInputActivity : AppCompatActivity() {
         try {
             voiceLauncher.launch(speechIntent)
         } catch (e: ActivityNotFoundException) {
-            Log.e(TAG, "Speech recogniser not found at launch time", e)
+            Log.e(TAG, "Speech recognizer not found at launch time", e)
             showToast(R.string.voice_unavailable)
             openDeepSeek(query = null)
         }
     }
 
     private fun onVoiceResult(result: ActivityResult) {
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             val matches = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             openDeepSeek(query = matches?.firstOrNull().orEmpty())
         } else {
@@ -178,17 +171,13 @@ class VoiceInputActivity : AppCompatActivity() {
         }
 
         if (photoFile == null) {
-            // Guard: no file = no camera launch; finish so transparent screen doesn't hang.
+            // Guard: no file = no camera launch; finish so transparent screen does not hang.
             showToast(R.string.camera_file_error)
             finish()
             return
         }
 
-        val photoUri = FileProvider.getUriForFile(
-            this,
-            "${BuildConfig.APPLICATION_ID}.fileprovider",
-            photoFile
-        )
+        val photoUri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUTHORITY, photoFile)
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
 
         // Grant URI permission only to the resolved camera activity (not every app).
@@ -207,6 +196,7 @@ class VoiceInputActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("SpellCheckingInspection")
     private fun createImageFile(): File {
         val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -216,10 +206,10 @@ class VoiceInputActivity : AppCompatActivity() {
     }
 
     private fun onCameraResult(result: ActivityResult) {
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             shareToDeepSeek(isImage = true, content = currentPhotoPath)
         } else {
-            // Clean up the pre-created file if the user cancelled.
+            // Clean up the pre-created file if the user canceled.
             deleteTempFile()
             finish()
         }
@@ -244,7 +234,7 @@ class VoiceInputActivity : AppCompatActivity() {
             } else {
                 // App not installed — open web chat.
                 startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse(DEEPSEEK_WEB_URL)).apply {
+                    Intent(Intent.ACTION_VIEW, DEEPSEEK_WEB_URL.toUri()).apply {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }
                 )
@@ -268,16 +258,13 @@ class VoiceInputActivity : AppCompatActivity() {
         }
 
         if (isImage) {
-            val filePath = content
-            if (filePath == null || !File(filePath).exists()) {
-                Log.e(TAG, "Image file missing: $filePath")
+            if (content == null || !File(content).exists()) {
+                Log.e(TAG, "Image file missing: $content")
                 showToast(R.string.image_file_error)
                 finish()
                 return
             }
-            val uri = FileProvider.getUriForFile(
-                this, "${BuildConfig.APPLICATION_ID}.fileprovider", File(filePath)
-            )
+            val uri = FileProvider.getUriForFile(this, FILE_PROVIDER_AUTHORITY, File(content))
             shareIntent.type = "image/jpeg"
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -289,13 +276,13 @@ class VoiceInputActivity : AppCompatActivity() {
         try {
             startActivity(shareIntent)
         } catch (e: ActivityNotFoundException) {
-            Log.w(TAG, "DeepSeek app not found or doesn't handle ACTION_SEND", e)
+            Log.w(TAG, "DeepSeek app not found or does not handle ACTION_SEND", e)
             if (!isImage) {
-                // Text fallback: open web chat. Note: pre-filling query is not officially
+                // Text fallback: open web chat. Pre-filling the query is not officially
                 // supported by DeepSeek web — user will need to paste manually.
                 try {
                     startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse(DEEPSEEK_WEB_URL)).apply {
+                        Intent(Intent.ACTION_VIEW, DEEPSEEK_WEB_URL.toUri()).apply {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }
                     )

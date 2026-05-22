@@ -20,4 +20,10 @@ internal object Constants {
 
     /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
     const val EXTRA_LAUNCH_CAMERA = "LAUNCH_CAMERA"
+
+    /**
+     * FileProvider authority — must match android:authorities in AndroidManifest.xml exactly.
+     * Defined here instead of via BuildConfig to avoid requiring a Gradle sync before first build.
+     */
+    const val FILE_PROVIDER_AUTHORITY = "com.yourdomain.deepseekwidget.fileprovider"
 }
