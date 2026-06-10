@@ -7,6 +7,7 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-purple?style=flat&logo=kotlin)](https://kotlinlang.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)](LICENSE)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/rajit2004?style=for-the-badge&logo=githubsponsors&color=EA4AAA)](https://github.com/sponsors/rajit2004)
+[![Changelog](https://img.shields.io/badge/Changelog-v1.2-00D4AA?style=for-the-badge)](CHANGELOG.md)
 
 ---
 
@@ -109,34 +110,12 @@ cd DeepSeekWidget
 
 ---
 
-## 📋 Changelog
-
-### v1.2 — The "Action" Update *(Current)*
-- ✅ **Camera + Voice fully working** — "Capture and Share" flow sends content directly to DeepSeek
-- ✅ **FileProvider crash fixed** — `IllegalArgumentException` resolved on all tested devices
-- ✅ **Runtime permissions** — CAMERA and RECORD_AUDIO requested before use
-- ✅ **APK size** — ~1.0 MB after R8 optimization
-
-### v1.1 — Refactoring
-- ✅ `Constants.kt` introduced — single source of truth for all package names and extras
-- ✅ Target SDK bumped to 35 (Android 15)
-- ✅ `AppCompatActivity` + `ActivityResultContracts` — deprecated `startActivityForResult` removed
-- ✅ Double-padding bug fixed in widget layout
-
-### v1.0 — Initial Release
-- ✅ Basic widget with DeepSeek teal styling
-- ✅ Web fallback when the DeepSeek app is not installed
-
----
-
 ## 🤝 Contributing
 
-1. Fork the repo
-2. Create a feature branch — `git checkout -b feature/your-idea`
-3. Commit — `git commit -m "Add: your feature"`
-4. Push and open a Pull Request
+[![Contributing Guide](https://img.shields.io/badge/Read-Contributing%20Guide-00D4AA?style=flat&logo=github)](CONTRIBUTING.md)
 
-All contributions welcome — bug fixes, new features, translations.
+Bug fixes, new features, OEM testing, and translations are all welcome.  
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and areas that need help.
 
 ---
 
