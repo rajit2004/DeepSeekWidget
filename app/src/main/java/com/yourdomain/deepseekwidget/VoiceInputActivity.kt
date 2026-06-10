@@ -56,6 +56,14 @@ class VoiceInputActivity : AppCompatActivity() {
     }
 
     private fun startCameraFlow() {
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+        } else {
+            openCamera()
+        }
+    }
+
+    private fun openCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             val photoFile: File? = try {
@@ -77,6 +85,22 @@ class VoiceInputActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
             finish()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
     }
 
@@ -231,5 +255,6 @@ class VoiceInputActivity : AppCompatActivity() {
         private const val TAG = "VoiceInputActivity"
         private const val REQUEST_IMAGE_CAPTURE = 1001
         private const val REQUEST_VOICE_RECOGNIZE = 1002
+        private const val REQUEST_CAMERA_PERMISSION = 1003
     }
 }
