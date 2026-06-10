@@ -1,6 +1,6 @@
 # 🐳 DeepSeekWidget — One-Tap AI Access
 
-> An open-source Android home screen widget that gives you instant access to DeepSeek — chat, voice input, and camera capture, without unlocking the app.
+> An open-source Android home screen widget that provides instant, high-performance access to DeepSeek's core features — chat, voice input, and camera capture.
 
 [![GitHub Release](https://img.shields.io/github/v/release/rajit2004/DeepSeekWidget?style=for-the-badge&logo=android&color=00D4AA)](https://github.com/rajit2004/DeepSeekWidget/releases)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/rajit2004?style=for-the-badge&logo=githubsponsors&color=EA4AAA)](https://github.com/sponsors/rajit2004)
@@ -14,16 +14,16 @@
 
 [![Download APK](https://img.shields.io/badge/Download-Latest%20APK-blue?style=for-the-badge&logo=github)](https://github.com/rajit2004/DeepSeekWidget/releases/latest)
 
-> ✅ **v1.2 is live!** A debug-signed `app-debug.apk` (~1.4 MB) is available on the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
+> ✅ **v1.2 is live!** Fixed camera and voice routing. Download the `app-debug.apk` (~1.0 MB) from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
 
 **Installation steps:**
 
 1. Download `app-debug.apk` from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases/latest)
-2. On your Android device, go to **Settings → Security** and enable **"Install from unknown sources"**
-3. Open the downloaded APK and install it
-4. Long-press your home screen → **Widgets** → **DeepSeek Widget**
+2. On your Android device, go to **Settings → Apps → Special app access → Install unknown apps** (or similar) and enable for your browser/file manager.
+3. Open the downloaded APK and install it.
+4. Long-press your home screen → **Widgets** → **DeepSeek Widget**.
 
-> ⚠️ This is a debug-signed APK intended for sideloading and local testing. Full source code is available in this repository for building a production-signed release yourself.
+> ⚠️ This is a debug-signed APK. For maximum security, you can build a production-signed release yourself using the source code provided.
 
 ---
 
@@ -31,34 +31,25 @@
 
 | Feature | Description |
 |---|---|
-| 🏠 **One-tap chat** | Opens the DeepSeek app or falls back to DeepSeek web if the app isn't installed |
-| 🎤 **Voice input** | Tap the mic, speak your query — DeepSeek opens with your transcribed text |
-| 📷 **Camera capture** | Snap a photo directly from the widget and send it to DeepSeek |
-| 🎨 **Material You design** | Adapts to your system light/dark theme with DeepSeek's teal accent |
-| 📦 **Lightweight** | Zero background services, minimal permissions, ~1.4 MB APK |
-| 🕊️ **Open source** | MIT licensed — free to fork, modify, and build upon |
+| 🏠 **Instant Chat** | One-tap to open the DeepSeek app's main chat interface. |
+| 🎤 **Voice-to-Chat** | Tap the mic, speak your query, and it's automatically shared to DeepSeek as a new message. |
+| 📷 **Visual Search** | Snap a photo directly from your home screen and send it as an attachment to DeepSeek for analysis. |
+| 🎨 **Native Feel** | Minimalist design with DeepSeek's signature teal accent; adapts to light/dark themes. |
+| 📦 **Ultra-Lightweight** | Optimized with R8; tiny APK footprint (~1.0 MB) with zero background battery drain. |
+| 🕊️ **Privacy First** | No data is collected by this widget. It acts purely as a high-speed router to the official DeepSeek app. |
 
 ---
 
 ## 🧠 How It Works
 
-```
-User taps widget on home screen
-        ↓
-PendingIntent fires
-        ↓
-DeepSeek app launches  ──── (fallback) ────→  DeepSeek web chat opens
+DeepSeekWidget uses a **"Capture and Share"** architecture to overcome the limitations of standard deep links:
 
-Mic button → runtime RECORD_AUDIO permission → voice recognition → text sent to DeepSeek
-Camera button → runtime CAMERA permission → photo captured via FileProvider → sent to DeepSeek
-```
-
-**Widget Logic:**
-- The widget is a standard `AppWidgetProvider` using `RemoteViews`
-- `PendingIntent`s are attached to the chat, mic, and camera buttons
-- A transparent trampoline `Activity` handles voice recognition and camera capture, then redirects to DeepSeek
-- Runtime permissions (microphone, camera) are requested correctly on Android 6+
-- Shared constants (e.g. `DEEPSEEK_PACKAGE`) live in a single `Constants.kt` to avoid duplication
+1. **User Interaction**: Tapping a button fires a `PendingIntent` to a transparent `VoiceInputActivity`.
+2. **Native Capture**:
+   - **Mic**: Launches the system speech recognizer.
+   - **Camera**: Launches the system camera and saves the image to a secure local cache via `FileProvider`.
+3. **Smart Routing**: The activity packages the transcribed text or the captured image into an `ACTION_SEND` intent targeted specifically at `com.deepseek.chat`.
+4. **App Hand-off**: DeepSeek receives the content and immediately presents it to the user in the chat composer.
 
 ---
 
@@ -67,12 +58,12 @@ Camera button → runtime CAMERA permission → photo captured via FileProvider 
 | Layer | Technology |
 |---|---|
 | Language | Kotlin 1.9+ |
-| UI | XML (RemoteViews) |
-| Build System | Gradle with Kotlin DSL (KTS) |
-| AGP | 8.7.3 |
+| Architecture | Trampoline Activity / Intent Routing |
+| Security | FileProvider (Scoped Storage) |
+| UI | XML RemoteViews / Material Components |
 | Minimum SDK | Android 8.0 (API 26) |
-| Target / Compile SDK | Android 15 (API 35) |
-| Shrinking | R8 enabled (APK ~1.4 MB) |
+| Target SDK | Android 15 (API 35) |
+| Optimization | R8 Shrinking & Resource Stripping |
 
 ---
 
@@ -81,115 +72,61 @@ Camera button → runtime CAMERA permission → photo captured via FileProvider 
 ```
 DeepSeekWidget/
 ├── app/
-│   ├── build.gradle.kts
-│   └── src/main/
-│       ├── java/com/yourdomain/deepseekwidget/
-│       │   ├── Constants.kt                  ← Shared constants (package names, etc.)
-│       │   ├── DeepSeekWidgetProvider.kt      ← AppWidgetProvider: widget logic & PendingIntents
-│       │   └── VoiceInputActivity.kt          ← Trampoline: voice recognition & camera capture
-│       ├── res/
-│       │   ├── drawable/
-│       │   │   ├── ic_deepseek_whale.xml
-│       │   │   ├── ic_mic.xml
-│       │   │   └── widget_background.xml
-│       │   ├── layout/
-│       │   │   └── deepseek_widget.xml
-│       │   ├── values/
-│       │   │   ├── colors.xml
-│       │   │   ├── strings.xml
-│       │   │   └── themes.xml
-│       │   └── xml/
-│       │       └── deepseek_widget_info.xml
-│       └── AndroidManifest.xml
-├── gradle/
-│   └── wrapper/
-│       ├── gradle-wrapper.jar
-│       └── gradle-wrapper.properties
-├── build.gradle.kts                           ← Project-level build file
-├── settings.gradle.kts
-├── gradle.properties
-├── gradlew
-├── gradlew.bat
-├── .gitignore
-├── LICENSE
-└── README.md
+│   ├── src/main/
+│   │   ├── java/com/yourdomain/deepseekwidget/
+│   │   │   ├── Constants.kt             ← Package IDs and intent extras
+│   │   │   ├── DeepSeekWidgetProvider.kt ← Widget lifecycle & RemoteViews
+│   │   │   └── VoiceInputActivity.kt     ← Logic for Camera/Voice capture
+│   │   └── res/
+│   │       ├── layout/
+│   │       │   └── deepseek_widget.xml   ← Widget UI declaration
+│   │       └── xml/
+│   │           └── file_paths.xml        ← Secure FileProvider configuration
+├── build.gradle.kts                      ← Project configuration
+└── README.md                             ← This documentation
 ```
 
 ---
 
 ## ⚡ Build Locally
 
-**Prerequisites:** Android Studio (Hedgehog or later) or a JDK 17+ environment with the Android SDK.
-
 ```bash
-# 1. Clone the repository
+# 1. Clone the repo
 git clone https://github.com/rajit2004/DeepSeekWidget.git
 cd DeepSeekWidget
 
-# 2. Open in Android Studio and let Gradle sync automatically
-#    — OR — build from the command line:
-
-# Debug APK
+# 2. Build Debug APK
 ./gradlew assembleDebug
-# Output: app/build/outputs/apk/debug/app-debug.apk
-
-# Release APK (requires a keystore)
-./gradlew assembleRelease
 ```
-
-**To generate a production-signed release APK in Android Studio:**
-
-1. **Build → Generate Signed Bundle / APK → APK**
-2. Create a new keystore (or use an existing one)
-3. Fill in the alias, passwords, and certificate details
-4. Select the `release` build variant and finish
 
 ---
 
 ## 📋 Changelog
 
-### v1.1 — Bug Fix & Stability Release *(Latest)*
-- ✅ Runtime `CAMERA` and `RECORD_AUDIO` permissions now requested correctly on Android 6+
-- ✅ Camera screen no longer freezes if image file creation fails
-- ✅ Photo path now persists across process death during camera capture
-- ✅ Double padding on widget layout removed — icons no longer cramped
-- ✅ Migrated from deprecated `startActivityForResult` to `ActivityResultContracts`
-- ✅ URI permission now granted only to the resolved camera app (not all apps)
-- ✅ Temp image file deleted after sharing to avoid storage bloat
-- ✅ Specific exception handling replacing generic `catch (Exception)`
-- ✅ User-facing toasts added for all failure states
-- ✅ `DEEPSEEK_PACKAGE` constant deduplicated into `Constants.kt`
-- ✅ Dead code (`isPackageInstalled`) removed
-- ✅ AGP bumped to 8.7.3, compileSdk/targetSdk bumped to 35
-- ✅ R8 shrinking enabled — APK reduced from ~4.5 MB to ~1.4 MB
+### v1.2 — The "Action" Update *(Current)*
+- ✅ **Fixed Camera/Voice Routing**: Implemented "Capture and Share" flow to ensure Mic/Camera buttons actually send content to DeepSeek.
+- ✅ **Stability Fix**: Resolved `FileProvider` crash (`IllegalArgumentException`) when capturing photos on certain devices.
+- ✅ **Permission Management**: Added runtime permission requests for `CAMERA` and `RECORD_AUDIO`.
+- ✅ **Optimization**: Further reduced APK size through R8 optimizations (~1.0 MB).
 
-### v1.0 — First Release *(Pre-release)*
-- ✅ One-tap home screen widget to open DeepSeek (app or web fallback)
-- ✅ Voice input button with trampoline activity for voice recognition
-- ✅ Material You design with DeepSeek teal accent
-- ✅ Supports Android 8.0 (API 26) and above
+### v1.1 — Refactoring
+- ✅ Migrated to `Constants.kt` for better maintainability.
+- ✅ Bumped Target SDK to 35 (Android 15).
+
+### v1.0 — Initial Release
+- ✅ Basic widget layout with DeepSeek teal styling.
+- ✅ Web fallback support for devices without the native app.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! To get started:
-
-1. **Fork** the repository
-2. **Create** a feature branch — `git checkout -b feature/your-idea`
-3. **Commit** your changes — `git commit -m "Add: your feature"`
-4. **Push** to your branch — `git push origin feature/your-idea`
-5. **Open a Pull Request** against `main`
-
-Please open an issue first for major changes so we can discuss the approach before you build it.
-
----
-
-## 💖 Support This Project
-
-Everything here is free and open source. If DeepSeekWidget saved you time or inspired your own project:
-
-[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-pink?style=for-the-badge&logo=githubsponsors)](https://github.com/sponsors/rajit2004)
+We love contributions!
+1. Fork it.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
 
 ---
 
@@ -204,8 +141,6 @@ Everything here is free and open source. If DeepSeekWidget saved you time or ins
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE) — see the `LICENSE` file for full details.
+MIT License — free for everyone.
 
-Free to use, modify, and distribute with attribution.
-
-> This is an independent open-source project and is **not** officially affiliated with or endorsed by DeepSeek.
+> *Disclaimer: This is an independent open-source project and is not officially affiliated with or endorsed by DeepSeek.*
