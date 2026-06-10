@@ -22,8 +22,6 @@
 3. Open the APK and install
 4. Long-press your home screen → **Widgets** → **DeepSeek Widget**
 
-> ⚠️ Signed with a debug keystore for sideloading. To build a production-signed APK, clone the repo and use **Build → Generate Signed APK** in Android Studio.
-
 ---
 
 ## 🚀 Features
