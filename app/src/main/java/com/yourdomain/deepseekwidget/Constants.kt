@@ -2,7 +2,6 @@ package com.yourdomain.deepseekwidget
 
 /**
  * Centralized constants for the DeepSeekWidget project.
- * All cross-file constants live here to avoid duplication and refactor risk.
  */
 internal object Constants {
 
@@ -21,9 +20,11 @@ internal object Constants {
     /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
     const val EXTRA_LAUNCH_CAMERA = "LAUNCH_CAMERA"
 
+    /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
+    const val EXTRA_LAUNCH_VOICE = "LAUNCH_VOICE"
+
     /**
      * FileProvider authority — must match android:authorities in AndroidManifest.xml exactly.
-     * Defined here instead of via BuildConfig to avoid requiring a Gradle sync before first build.
      */
     const val FILE_PROVIDER_AUTHORITY = "com.yourdomain.deepseekwidget.fileprovider"
 }

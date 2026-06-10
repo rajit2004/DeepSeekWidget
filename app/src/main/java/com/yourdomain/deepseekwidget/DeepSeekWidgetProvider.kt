@@ -65,10 +65,11 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
             )
 
-            // ── Mic button → voice recognition trampoline ────────────────────
+            // ── Mic button → native voice trampoline ───────────────────────
             views.setOnClickPendingIntent(
                 R.id.mic_button,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10 + 1) {
+                    putExtra(Constants.EXTRA_LAUNCH_VOICE, true)
                     data = Uri.parse("widget://mic/$appWidgetId")
                 }
             )
