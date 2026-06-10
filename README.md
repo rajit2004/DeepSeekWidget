@@ -14,7 +14,7 @@
 
 [![Download APK](https://img.shields.io/badge/Download-Latest%20APK-blue?style=for-the-badge&logo=github)](https://github.com/rajit2004/DeepSeekWidget/releases/latest)
 
-> ✅ **v1.1 is live!** A debug-signed `app-debug.apk` (~1.4 MB) is available on the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
+> ✅ **v1.2 is live!** A debug-signed `app-debug.apk` (~1.4 MB) is available on the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
 
 **Installation steps:**
 
