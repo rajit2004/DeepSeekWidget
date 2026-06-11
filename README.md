@@ -15,7 +15,7 @@
 
 [![Download APK](https://img.shields.io/badge/Download-Latest%20APK-blue?style=for-the-badge&logo=github)](https://github.com/rajit2004/DeepSeekWidget/releases/latest)
 
-> ✅ **v1.2 is live!** Camera and voice routing fully working. Download `app-debug.apk` (~1.0 MB) from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
+> ✅ **v1.2 is live!** Camera and voice routing fully working. Download `app-release.apk` (~1.0 MB) from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases).
 
 1. Download `app-debug.apk` from the [Releases page](https://github.com/rajit2004/DeepSeekWidget/releases/latest)
 2. Enable **Install unknown apps** for your browser/file manager in device settings
