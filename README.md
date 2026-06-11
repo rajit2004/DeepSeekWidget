@@ -1,6 +1,6 @@
 # 🐳 DeepSeekWidget — One-Tap AI Access
 
-> An open-source Android home screen widget for instant access to DeepSeek — chat, voice, and camera without unlocking your phone.
+> An open-source Android home screen widget for instant access to DeepSeek — chat, voice, and camera.
 
 [![GitHub Release](https://img.shields.io/github/v/release/rajit2004/DeepSeekWidget?style=for-the-badge&logo=android&color=00D4AA)](https://github.com/rajit2004/DeepSeekWidget/releases)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat&logo=android)](https://developer.android.com)
@@ -8,6 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)](LICENSE)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/rajit2004?style=for-the-badge&logo=githubsponsors&color=EA4AAA)](https://github.com/sponsors/rajit2004)
 [![Changelog](https://img.shields.io/badge/Changelog-v1.2-00D4AA?style=for-the-badge)](CHANGELOG.md)
+[![Watch the demo video](https://img.shields.io/badge/📺-Watch%20Demo-blue?style=for-the-badge)](https://github.com/user-attachments/assets/9a0f1500-f124-48f3-a31c-a9716e5625db)
 
 ---
 
@@ -34,6 +35,14 @@
 | 🎨 **Native Feel** | DeepSeek's teal accent, adapts to system light/dark theme. |
 | 📦 **Ultra-Lightweight** | R8-optimized. ~1.0 MB APK, zero background services, zero battery drain. |
 | 🕊️ **Privacy First** | No data collected. Widget is a pure router to the official DeepSeek app. |
+
+---
+
+## 🎥 Demo Video
+
+Watch the DeepSeekWidget in action – one tap from the home screen to chat, voice, or camera input.
+
+<video src="https://github.com/user-attachments/assets/9a0f1500-f124-48f3-a31c-a9716e5625db" width="400" controls style="border:1px solid #ccc; border-radius:8px;"></video>
 
 ---
 
