@@ -77,6 +77,9 @@ PendingIntent → VoiceInputActivity (transparent, no UI)
 
 ## 📂 Project Structure
 
+> **Note:** The package name `com.yourdomain.deepseekwidget` is intentionally
+> generic to make forking straightforward.
+
 ```
 DeepSeekWidget/
 ├── app/src/main/
