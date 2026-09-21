@@ -33,10 +33,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
-            // NOTE: signingConfig is NOT set here intentionally.
-            // The debug keystore must NOT be used for a public/Play Store release.
-            // To sign a release APK:
+            // To sign a release APK with a production keystore:
             //   1. Generate a keystore: Build → Generate Signed Bundle/APK
             //   2. Store credentials in keystore.properties (already in .gitignore)
             //   3. Read them here via:
@@ -56,7 +53,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
 }
