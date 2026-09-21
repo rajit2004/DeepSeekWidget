@@ -9,76 +9,51 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [1.2.0] — 2026-05-22 — The "Action" Update
-
-### Fixed
-- Camera button now works end-to-end: photo is captured and sent directly to DeepSeek's chat composer via `ACTION_SEND` with `image/jpeg`
-- `FileProvider` crash (`IllegalArgumentException`) when launching the camera on certain devices — authority mismatch resolved
-- Transparent activity no longer hangs open if image file creation fails — `finish()` is now called in all error paths
-- Voice button now sends transcribed text to DeepSeek instead of just opening the app
+## [2.0] - 2026-09-21
 
 ### Added
-- Runtime permission requests for `CAMERA` and `RECORD_AUDIO` before each respective action
-- `onSaveInstanceState` saves `currentPhotoPath` so the image is not lost if the process is killed while the camera is open
-- User-facing `Toast` messages for all failure states (permission denied, camera unavailable, file error, share error)
-- Temp image file is deleted after sharing to prevent storage bloat
+- Widget resizing support (2x2, 4x1, 2x4, and other configurations)
+- Quick prompt shortcuts (Summarize, Translate, Explain Code, Write Email)
+- Recent prompts history, last 5 prompts saved and accessible
+- Notification channel for processing feedback
+- Launcher activity anchoring static shortcuts
+- PromptStore for persisting recent prompts
+- LIGHT/DARK theme support, follows system setting
+- Runtime permission requests for CAMERA and RECORD_AUDIO
+- Temp image file cleanup after sharing
+- Proper TalkBack content descriptions on all interactive elements
+
+### Fixed
+- FileProvider crash on some devices due to authority mismatch
+- Camera button now sends photos to DeepSeek instead of failing silently
+- Voice button now sends transcribed text instead of just opening the app
+- Double padding bug in widget layout
+- AppCompat theme crash when using bare Activity
+- PendingIntent collision risk with unique request codes per widget instance
 
 ### Changed
-- APK size reduced to ~1.0 MB via R8 resource shrinking (`isShrinkResources = true`)
-- URI permission granted only to the resolved camera app — not broadcast to all apps
+- Migrated from startActivityForResult to ActivityResultContracts
+- R8 full mode for smaller APK (around 1 MB)
+- compileSdk and targetSdk bumped to 35 (Android 15)
+- Kotlin bumped to 2.0
+- Gradle wrapper bumped to 8.9
 
 ---
 
-## [1.1.0] — 2026-05-22 — Refactoring
+## [1.0.0] - 2026-05-09
 
 ### Added
-- `Constants.kt` — single source of truth for `DEEPSEEK_PACKAGE`, `FILE_PROVIDER_AUTHORITY`, `DEEPSEEK_WEB_URL`, and all intent extra keys
-- `onDeleted` and `onDisabled` overrides in `DeepSeekWidgetProvider` for future cleanup hooks
-- `android:description` in `deepseek_widget_info.xml` for Android 12+ widget picker
-
-### Fixed
-- Double padding bug: removed `<padding>` block from `widget_background.xml` — shape drawable padding was stacking on top of layout padding, compressing widget content
-- `app:tint` on `ImageButton` replaced with `RemoteViews.setInt(..., "setColorFilter", ...)` — AppCompat attributes are unsupported in RemoteViews
-- `VoiceInputActivity` now extends `AppCompatActivity` — bare `Activity` with an AppCompat theme caused crashes on some devices
-- `@android:style/Theme.Translucent.NoTitleBar` replaced with a custom `Theme.DeepSeekWidget.Transparent` that extends AppCompat
-- `FileProvider` authority now uses `${applicationId}` manifest placeholder — stays in sync with `applicationId` in `build.gradle.kts`
-
-### Changed
-- Migrated from deprecated `startActivityForResult` / `onActivityResult` to `ActivityResultContracts`
-- `RECORD_AUDIO` and `CAMERA` now imported directly (`import android.Manifest.permission.CAMERA`) rather than via `android.Manifest`
-- `Uri.parse()` replaced with KTX `String.toUri()` extension
-- `Activity.RESULT_OK` → bare `RESULT_OK` (redundant qualifier inside `AppCompatActivity`)
-- Removed dead code: `isPackageInstalled()` function that was defined but never called
-- `DEEPSEEK_PACKAGE` constant deduplicated — was defined independently in both Kotlin files
-
-### Build
-- `compileSdk` and `targetSdk` bumped from 34 → 35 (Android 15)
-- Kotlin bumped from 1.9.0 → 2.0.0
-- Android Gradle Plugin bumped from 8.2.0 → 8.7.3 (first version with full SDK 35 support)
-- Gradle wrapper bumped from 8.4 → 8.9
-- `buildConfig = true` added to `buildFeatures` block
-- R8 enabled for release builds: `isMinifyEnabled = true`, `isShrinkResources = true`
-- Release build no longer signed with debug keystore
-
----
-
-## [1.0.0] — 2026-05-09 — Initial Release
-
-### Added
+- Initial release
 - Home screen widget with DeepSeek teal accent and whale logo
-- Tap-to-open: launches DeepSeek app or falls back to `chat.deepseek.com` if not installed
-- Mic button: basic voice recognition trampoline
-- Camera button: initial implementation (non-functional in this release)
-- `AppWidgetProvider` with `RemoteViews` layout
-- `PendingIntent` with `FLAG_IMMUTABLE` for Android 12+ compliance
-- Unique `requestCode` per widget instance to prevent `PendingIntent` collisions
-- Programmatic teal tint on icon buttons via `setColorFilter` (avoids unsupported `app:tint` in RemoteViews)
+- Tap to open DeepSeek app or fall back to web
+- Mic and camera buttons
+- AppWidgetProvider with RemoteViews layout
+- PendingIntent with FLAG_IMMUTABLE for Android 12+ compliance
+- FileProvider for scoped camera image storage
 - MIT License
-- `FileProvider` configuration for scoped camera image storage
 
 ---
 
-[Unreleased]: https://github.com/rajit2004/DeepSeekWidget/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/rajit2004/DeepSeekWidget/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/rajit2004/DeepSeekWidget/compare/v1.0.0...v1.1.0
+[Unreleased]: https://github.com/rajit2004/DeepSeekWidget/compare/v2.0...HEAD
+[2.0]: https://github.com/rajit2004/DeepSeekWidget/compare/v1.0.0...v2.0
 [1.0.0]: https://github.com/rajit2004/DeepSeekWidget/releases/tag/v1.0.0

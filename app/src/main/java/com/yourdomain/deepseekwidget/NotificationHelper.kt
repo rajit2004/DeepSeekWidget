@@ -6,10 +6,6 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 
-/**
- * Utility class for creating and managing notification channels
- * used during voice and camera processing flows.
- */
 object NotificationHelper {
 
     private const val CHANNEL_ID = "deepseek_processing"

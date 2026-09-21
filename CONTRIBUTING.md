@@ -1,13 +1,13 @@
 # Contributing to DeepSeekWidget
 
-Thanks for taking the time to contribute. This is a small open-source project — contributions of any size are welcome.
+Thanks for taking the time to contribute. This is a small open-source project, and contributions of any size are welcome.
 
 ---
 
 ## Before You Start
 
 - Check [open issues](https://github.com/rajit2004/DeepSeekWidget/issues) to see if your idea or bug is already tracked
-- For big changes, open an issue first so we can discuss before you invest time building
+- For big changes, open an issue first so we can discuss before you spend time building
 
 ---
 
@@ -25,7 +25,7 @@ Open an issue with:
 
 Open an issue with:
 - What you want and why
-- How it fits the widget's goal (zero-friction access to DeepSeek)
+- How it fits the widget's goal of quick access to DeepSeek
 - Any reference implementation (e.g. how ChatGPT or Gemini widgets do it)
 
 ### Submitting a Pull Request
@@ -54,9 +54,9 @@ git push origin feature/your-feature-name
 
 ## Code Style
 
-- Kotlin only — no Java
+- Kotlin only, no Java
 - Follow existing naming conventions (`camelCase` for functions, `PascalCase` for classes)
-- All shared constants go in `Constants.kt` — never hardcode package names or URIs elsewhere
+- All shared constants go in `Constants.kt`, never hardcode package names or URIs elsewhere
 - Every new method that isn't obvious needs a one-line KDoc comment
 - No dead code, no commented-out blocks in PRs
 
@@ -65,20 +65,20 @@ git push origin feature/your-feature-name
 ## Commit Message Format
 
 ```
-Add: short description       ← new feature
-Fix: short description       ← bug fix
-Refactor: short description  ← code change with no behavior change
-Docs: short description      ← README, comments, CHANGELOG only
-Bump: dependency or SDK      ← version updates
+Add: short description       -- new feature
+Fix: short description       -- bug fix
+Refactor: short description  -- code change with no behavior change
+Docs: short description      -- README, comments, CHANGELOG only
+Bump: dependency or SDK      -- version updates
 ```
 
 ---
 
 ## What Makes a Good PR
 
-- Solves one thing — don't bundle multiple changes
+- Solves one thing, don't bundle multiple changes
 - Builds without warnings on `./gradlew assembleDebug`
-- Tested on a real device (emulator results are secondary — widget behavior differs)
+- Tested on a real device (emulator results are secondary, widget behavior differs)
 - Updates `CHANGELOG.md` under an `Unreleased` section
 - Updates `README.md` if the feature is user-facing
 
@@ -88,9 +88,9 @@ Bump: dependency or SDK      ← version updates
 
 | Area | What's needed |
 |---|---|
-| Deep link research | Test whether `deepseek://chat` and `deepseek://voice` are handled by the DeepSeek app |
-| OEM testing | Test on MIUI, EMUI, ColorOS — widget behavior varies heavily on custom launchers |
-| Widget resize | Make the layout adapt gracefully when resized to 4×1 or 2×1 cells |
+| Deep link research | Test whether `deepseek://chat` and `deepseek://voice` work |
+| OEM testing | Test on MIUI, EMUI, ColorOS, widget behavior varies on custom launchers |
+| Widget resize | Make the layout adapt when resized to 4x1 or 2x1 cells |
 | Accessibility | Add proper TalkBack support for all three tap targets |
 | Preview image | Create a proper `preview_widget.png` for the Android widget picker |
 

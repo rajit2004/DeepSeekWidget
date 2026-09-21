@@ -26,8 +26,6 @@ android {
     }
 
     buildFeatures {
-        // Required so VoiceInputActivity can use BuildConfig.APPLICATION_ID
-        // for the FileProvider authority — keeps it in sync with applicationId.
         buildConfig = true
     }
 
@@ -36,7 +34,6 @@ android {
             isDebuggable = true
         }
         release {
-            // R8 full-mode: shrinks code and resources, reducing APK from ~4.5 MB to ~1 MB.
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Semantic widget colors (light mode = dark theme, matching current design) -->
-    <color name="widget_background">@color/dark_blue</color>
-    <color name="widget_text_primary">@color/white</color>
-    <color name="widget_text_secondary">#B3FFFFFF</color>
-    <color name="widget_divider">#33FFFFFF</color>
-    <color name="widget_icon">@color/teal</color>
-
-    <!-- Base colors -->
-    <color name="white">#FFFFFF</color>
-    <color name="dark_blue">#FF1C1C4A</color>
-    <color name="teal">#FF00D4AA</color>
-    <color name="divider">#33FFFFFF</color>
+    <color name="background_widget">#F5F5F5</color>
+    <color name="background_widget_night">#1E1E1E</color>
+    <color name="border_widget">#E0E0E0</color>
+    <color name="border_widget_night">#3A3A3A</color>
+    <color name="background_input">#FFFFFF</color>
+    <color name="background_input_night">#2D2D2D</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_primary_night">#E0E0E0</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_secondary_night">#BDBDBD</color>
+    <color name="colorPrimary">#1976D2</color>
+    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="colorAccent">#FF6F00</color>
 </resources>

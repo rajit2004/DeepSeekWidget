@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import org.json.JSONArray
 
 /**
- * Stores recent prompts sent to DeepSeek in SharedPreferences.
- * Keeps the last [MAX_PROMPTS] entries, newest first.
+ * Stores recent prompts sent to DeepSeek.
+ * Keeps the last 5 entries, newest first.
  */
 class PromptStore(context: Context) {
 

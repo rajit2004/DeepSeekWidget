@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widget_padding">16dp</dimen>
+    <dimen name="widget_button_size">40dp</dimen>
+    <dimen name="widget_button_spacing">8dp</dimen>
+    <dimen name="widget_corner_radius">16dp</dimen>
+    <dimen name="widget_border_width">1dp</dimen>
+    <dimen name="widget_input_padding">12dp</dimen>
+    <dimen name="widget_input_corner_radius">8dp</dimen>
+    <dimen name="dialog_margin">16dp</dimen>
+</resources>

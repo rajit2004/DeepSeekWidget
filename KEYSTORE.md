@@ -32,7 +32,7 @@ keyPassword=your_key_password
 
 ## Step 3: Build
 
-The `app/build.gradle.kts` file will automatically detect `keystore.properties` and use it for release signing. If the file doesn't exist, the debug keystore is used as a fallback.
+The `app/build.gradle.kts` file detects `keystore.properties` and uses it for release signing. If the file doesn't exist, the debug keystore is used instead.
 
 ```bash
 ./gradlew assembleRelease
@@ -40,7 +40,7 @@ The `app/build.gradle.kts` file will automatically detect `keystore.properties` 
 
 ## Security Notes
 
-- **Never commit `keystore.properties`** — it's already in `.gitignore`
-- **Never commit `.jks` or `.keystore` files** — also in `.gitignore`
-- Back up your keystore securely — losing it means you can't update your Play Store app
+- **Never commit `keystore.properties`** - it's already in `.gitignore`
+- **Never commit `.jks` or `.keystore` files** - also in `.gitignore`
+- Back up your keystore somewhere safe, losing it means you can't update your Play Store app
 - Use different keystores for debug and release

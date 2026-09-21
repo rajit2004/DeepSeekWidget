@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Semantic widget colors (dark mode = light theme) -->
-    <color name="widget_background">#FFFFFFFF</color>
-    <color name="widget_text_primary">#FF1C1C4A</color>
-    <color name="widget_text_secondary">#991C1C4A</color>
-    <color name="widget_divider">#1A1C1C4A</color>
-    <color name="widget_icon">@color/teal</color>
+    <color name="background_widget">#1E1E1E</color>
+    <color name="border_widget">#3A3A3A</color>
+    <color name="background_input">#2D2D2D</color>
+    <color name="text_primary">#E0E0E0</color>
+    <color name="text_secondary">#BDBDBD</color>
 </resources>

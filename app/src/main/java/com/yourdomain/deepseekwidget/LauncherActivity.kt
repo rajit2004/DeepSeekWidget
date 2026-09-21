@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * Minimal launcher activity that anchors static shortcuts.
- * Immediately forwards to [InputActivity] with any prompt prefix.
+ * Launcher activity that anchors static shortcuts.
+ * Forwards to InputActivity with any prompt prefix.
  */
 class LauncherActivity : AppCompatActivity() {
 

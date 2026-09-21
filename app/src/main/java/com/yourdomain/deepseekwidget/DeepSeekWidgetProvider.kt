@@ -12,14 +12,6 @@ import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 
-/**
- * Home-screen widget provider for DeepSeekWidget.
- *
- * Responsibilities:
- *  - Inflate and bind [RemoteViews] for every placed widget instance.
- *  - Attach [PendingIntent]s for the three tap targets: root, mic, camera.
- *  - Rebuild widgets on system configuration changes (e.g., dark mode toggle).
- */
 class DeepSeekWidgetProvider : AppWidgetProvider() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -57,7 +49,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
         val minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
         val minHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)
-        Log.d(TAG, "onAppWidgetOptionsChanged: ${appWidgetId} → ${minWidth}x${minHeight}dp")
+        Log.d(TAG, "onAppWidgetOptionsChanged: $appWidgetId -> ${minWidth}x${minHeight}dp")
         updateAppWidget(context, appWidgetManager, appWidgetId)
     }
 
@@ -69,9 +61,6 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
     companion object {
         private const val TAG = "DeepSeekWidgetProvider"
 
-        /**
-         * Builds or refreshes the [RemoteViews] for a single widget instance.
-         */
         internal fun updateAppWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,
@@ -79,13 +68,13 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
         ) {
             val views = RemoteViews(context.packageName, R.layout.deepseek_widget)
 
-            // ── Text input area → InputActivity (text dialog) ─────────────
+            // Text input -> opens the input dialog
             views.setOnClickPendingIntent(
                 R.id.text_input_area,
                 buildInputActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10)
             )
 
-            // ── Mic button → voice trampoline ───────────────────────────
+            // Mic button -> voice recognition
             views.setOnClickPendingIntent(
                 R.id.mic_button,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10 + 1) {
@@ -94,7 +83,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
             )
 
-            // ── Camera button → camera trampoline ───────────────────────
+            // Camera button -> camera capture
             views.setOnClickPendingIntent(
                 R.id.camera_button,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10 + 2) {
@@ -103,7 +92,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
             )
 
-            // ── Show last prompt if available ─────────────────────────
+            // Show last prompt if available
             val lastPrompt = PromptStore(context).getLatestPrompt()
             if (lastPrompt != null) {
                 views.setViewVisibility(R.id.last_prompt, View.VISIBLE)

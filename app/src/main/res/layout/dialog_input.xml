@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="@dimen/dialog_margin">
 
     <EditText
         android:id="@+id/input_field"
@@ -13,7 +13,10 @@
         android:inputType="textMultiLine"
         android:minLines="2"
         android:maxLines="6"
-        android:gravity="top|start"
-        android:textColorHint="#999999" />
+        android:gravity="top"
+        android:padding="@dimen/widget_input_padding"
+        android:background="@drawable/input_background"
+        android:textSize="16sp"
+        android:importantForAutofill="no" />
 
 </LinearLayout>

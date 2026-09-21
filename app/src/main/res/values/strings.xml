@@ -1,46 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DeepSeek Widget — AI Chat</string>
-    <string name="widget_placeholder">Ask DeepSeek anything…</string>
-    <string name="widget_description">One‑tap AI chat, voice, and camera from your home screen. Ask questions, take photos, or speak to DeepSeek instantly.</string>
-    <string name="chat">Chat</string>
+    <string name="app_name">DeepSeek Widget</string>
+    <string name="widget_description">Quick input for DeepSeek AI</string>
+    <string name="widget_text_hint">Ask DeepSeek anything...</string>
+    <string name="widget_content_description">DeepSeek widget with text input, camera, and voice buttons</string>
+    <string name="camera_button_description">Take photo and send to DeepSeek</string>
+    <string name="mic_button_description">Voice input for DeepSeek</string>
+    <string name="last_prompt_description">Last prompt sent to DeepSeek</string>
 
-    <!-- Content descriptions for accessibility / TalkBack -->
-    <string name="content_desc_deepseek">DeepSeek logo</string>
-    <string name="content_desc_voice">Start voice input</string>
-    <string name="content_desc_camera">Open camera</string>
-    <string name="widget_content_desc">DeepSeek AI widget. Double-tap to open chat, or use camera and voice buttons below.</string>
-    <string name="a11y_voice_listening">Listening for voice input</string>
-    <string name="a11y_camera_capturing">Opening camera</string>
-    <string name="a11y_sending_to_deepseek">Sending to DeepSeek</string>
-    <string name="a11y_opening_deepseek">Opening DeepSeek chat</string>
-
-    <!-- Voice recognition -->
-    <string name="voice_prompt">Speaking to DeepSeek…</string>
-    <string name="voice_unavailable">Voice input is not available on this device</string>
-
-    <!-- Camera -->
-    <string name="camera_unavailable">Camera is not available on this device</string>
-    <string name="camera_file_error">Could not create image file. Please try again.</string>
-
-    <!-- Permissions -->
-    <string name="perm_camera_denied">Camera permission is required to use this feature</string>
-    <string name="perm_audio_denied">Microphone permission is required for voice input</string>
-
-    <!-- DeepSeek launch / sharing -->
-    <string name="deepseek_open_error">Could not open DeepSeek. Please install the app or check your browser.</string>
-    <string name="deepseek_web_fallback">DeepSeek app not found — opened web chat instead</string>
-    <string name="image_file_error">Image capture failed. Please try again.</string>
-    <string name="image_share_error">Could not share image to DeepSeek. Please install the DeepSeek app.</string>
-
-    <!-- Text input -->
-    <string name="input_hint">Ask DeepSeek anything…</string>
-    <string name="input_dialog_title">Message DeepSeek</string>
+    <string name="input_dialog_title">Send to DeepSeek</string>
+    <string name="input_hint">Type your prompt...</string>
     <string name="input_send">Send</string>
     <string name="input_cancel">Cancel</string>
-    <string name="content_desc_text_input">Type a message to send to DeepSeek</string>
 
-    <!-- Quick prompt shortcuts -->
+    <string name="perm_camera_denied">Camera permission is needed to take photos</string>
+    <string name="perm_audio_denied">Microphone permission is needed for voice input</string>
+    <string name="camera_file_error">Could not create image file</string>
+    <string name="camera_unavailable">No camera app found</string>
+    <string name="voice_unavailable">No speech recognition app found</string>
+    <string name="voice_prompt">What would you like to ask DeepSeek?</string>
+    <string name="image_share_error">Could not send image to DeepSeek</string>
+    <string name="deepseek_open_error">Could not open DeepSeek</string>
+
+    <string name="notification_channel_name">Processing</string>
+    <string name="notification_channel_description">Shows while sending data to DeepSeek</string>
+    <string name="notification_camera_processing">Processing photo...</string>
+    <string name="notification_voice_processing">Processing voice input...</string>
+
+    <string name="a11y_camera_capturing">Opening camera to capture photo</string>
+    <string name="a11y_voice_listening">Listening for voice input</string>
+    <string name="a11y_sending_to_deepseek">Sending to DeepSeek</string>
+    <string name="a11y_opening_deepseek">Opening DeepSeek</string>
+
     <string name="shortcut_summarize_label">Summarize</string>
     <string name="shortcut_summarize_long">Summarize text with DeepSeek</string>
     <string name="shortcut_translate_label">Translate</string>
@@ -48,11 +39,5 @@
     <string name="shortcut_explain_label">Explain Code</string>
     <string name="shortcut_explain_long">Explain code with DeepSeek</string>
     <string name="shortcut_email_label">Write Email</string>
-    <string name="shortcut_email_long">Draft an email with DeepSeek</string>
-
-    <!-- Notifications -->
-    <string name="notification_channel_name">Processing</string>
-    <string name="notification_channel_description">Shows status while voice or camera is processing</string>
-    <string name="notification_voice_processing">Listening for voice input…</string>
-    <string name="notification_camera_processing">Capturing photo…</string>
+    <string name="shortcut_email_long">Write an email with DeepSeek</string>
 </resources>

@@ -11,9 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_PACKAGE
 
 /**
- * Transparent Activity that shows a text input dialog.
- * Launched from the widget's text field area.
- * On submit, sends the text to DeepSeek via ACTION_SEND.
+ * Shows a text input dialog when the user taps the widget's text field.
+ * Sends the entered text to DeepSeek via ACTION_SEND.
  */
 class InputActivity : AppCompatActivity() {
 

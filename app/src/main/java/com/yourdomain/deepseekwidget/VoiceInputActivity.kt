@@ -23,10 +23,8 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * Transparent trampoline [AppCompatActivity] that routes widget taps to the native DeepSeek app.
- *
- * This activity acts as a high-performance router to launch DeepSeek's internal
- * features (Camera, Voice, Chat) directly or via system capture-and-share flows.
+ * Transparent trampoline that routes widget taps to the DeepSeek app.
+ * Handles camera, voice, and chat intents.
  */
 class VoiceInputActivity : AppCompatActivity() {
 
@@ -235,10 +233,6 @@ class VoiceInputActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Routes the user to a specific feature within the DeepSeek app.
-     * Uses a combination of custom URI schemes and Package Manager launch intents.
-     */
     private fun routeToDeepSeekNative(feature: String) {
         window.decorView.announceForAccessibility(getString(R.string.a11y_opening_deepseek))
         val uri = when (feature) {
