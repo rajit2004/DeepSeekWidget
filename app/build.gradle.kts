@@ -39,6 +39,7 @@ android {
             //   3. Read them here via:
             //      val keystoreProps = Properties().apply { load(rootProject.file("keystore.properties").inputStream()) }
             //      signingConfig = signingConfigs.create("release") { ... }
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
