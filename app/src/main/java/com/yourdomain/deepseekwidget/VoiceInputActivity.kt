@@ -136,6 +136,7 @@ class VoiceInputActivity : AppCompatActivity() {
         }
 
         try {
+            window.decorView.announceForAccessibility(getString(R.string.a11y_camera_capturing))
             captureImageLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, R.string.camera_unavailable, Toast.LENGTH_SHORT).show()
@@ -158,6 +159,7 @@ class VoiceInputActivity : AppCompatActivity() {
             putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_prompt))
         }
         try {
+            window.decorView.announceForAccessibility(getString(R.string.a11y_voice_listening))
             recognizeSpeechLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, R.string.voice_unavailable, Toast.LENGTH_SHORT).show()
@@ -166,6 +168,7 @@ class VoiceInputActivity : AppCompatActivity() {
     }
 
     private fun shareToDeepSeek(contentUri: Uri, mimeType: String) {
+        window.decorView.announceForAccessibility(getString(R.string.a11y_sending_to_deepseek))
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             setPackage(DEEPSEEK_PACKAGE)
             type = mimeType
@@ -184,6 +187,7 @@ class VoiceInputActivity : AppCompatActivity() {
     }
 
     private fun shareTextToDeepSeek(text: String) {
+        window.decorView.announceForAccessibility(getString(R.string.a11y_sending_to_deepseek))
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             setPackage(DEEPSEEK_PACKAGE)
             type = "text/plain"
@@ -228,6 +232,7 @@ class VoiceInputActivity : AppCompatActivity() {
      * Uses a combination of custom URI schemes and Package Manager launch intents.
      */
     private fun routeToDeepSeekNative(feature: String) {
+        window.decorView.announceForAccessibility(getString(R.string.a11y_opening_deepseek))
         val uri = when (feature) {
             "camera" -> Uri.parse("https://chat.deepseek.com/chat?action=camera")
             "voice"  -> Uri.parse("https://chat.deepseek.com/chat?action=voice")

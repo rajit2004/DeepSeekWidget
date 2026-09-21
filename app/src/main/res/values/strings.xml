@@ -9,6 +9,11 @@
     <string name="content_desc_deepseek">DeepSeek logo</string>
     <string name="content_desc_voice">Start voice input</string>
     <string name="content_desc_camera">Open camera</string>
+    <string name="widget_content_desc">DeepSeek AI widget. Double-tap to open chat, or use camera and voice buttons below.</string>
+    <string name="a11y_voice_listening">Listening for voice input</string>
+    <string name="a11y_camera_capturing">Opening camera</string>
+    <string name="a11y_sending_to_deepseek">Sending to DeepSeek</string>
+    <string name="a11y_opening_deepseek">Opening DeepSeek chat</string>
 
     <!-- Voice recognition -->
     <string name="voice_prompt">Speaking to DeepSeek…</string>
