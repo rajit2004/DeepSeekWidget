@@ -15,9 +15,6 @@ internal object Constants {
     const val KEY_PHOTO_PATH = "photo_path"
 
     /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
-    const val EXTRA_SKIP_VOICE = "SKIP_VOICE"
-
-    /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
     const val EXTRA_LAUNCH_CAMERA = "LAUNCH_CAMERA"
 
     /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */

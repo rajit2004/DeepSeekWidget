@@ -60,7 +60,6 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             views.setOnClickPendingIntent(
                 R.id.widget_root,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10) {
-                    putExtra(Constants.EXTRA_SKIP_VOICE, true)
                     data = Uri.parse("widget://main/$appWidgetId")
                 }
             )
