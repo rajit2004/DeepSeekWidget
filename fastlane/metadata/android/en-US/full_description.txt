@@ -1,0 +1,15 @@
+DeepSeek Widget — AI Chat, Voice & Camera from Your Home Screen
+
+One-tap access to DeepSeek AI from your Android home screen. Type, speak, or snap — instant AI chat without unlocking your phone.
+
+Features:
+• Instant Chat — One tap opens DeepSeek directly to chat
+• Voice-to-Chat — Tap mic, speak, text sent to DeepSeek
+• Camera-to-Chat — Snap a photo and send it to DeepSeek for analysis
+• Text Input — Type a question directly from the widget
+• Quick Prompts — Pre-built shortcuts: Summarize, Translate, Explain Code, Write Email
+• Light/Dark Theme — Adapts to your system theme automatically
+• Resizable Widget — Works at 2x2, 4x1, 2x4, and other sizes
+• Ultra-Lightweight — ~1.5 MB, zero background services, zero battery drain
+• Privacy First — No data collected. Pure router to the official DeepSeek app.
+• Open Source — MIT licensed, fully auditable code.
