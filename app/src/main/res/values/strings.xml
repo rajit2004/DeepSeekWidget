@@ -32,4 +32,11 @@
     <string name="deepseek_web_fallback">DeepSeek app not found — opened web chat instead</string>
     <string name="image_file_error">Image capture failed. Please try again.</string>
     <string name="image_share_error">Could not share image to DeepSeek. Please install the DeepSeek app.</string>
+
+    <!-- Text input -->
+    <string name="input_hint">Ask DeepSeek anything…</string>
+    <string name="input_dialog_title">Message DeepSeek</string>
+    <string name="input_send">Send</string>
+    <string name="input_cancel">Cancel</string>
+    <string name="content_desc_text_input">Type a message to send to DeepSeek</string>
 </resources>

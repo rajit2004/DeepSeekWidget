@@ -8,35 +8,43 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- Top Row: Logo and "Chat" label -->
+    <!-- Top section: Logo + Text input field -->
     <LinearLayout
+        android:id="@+id/text_input_area"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:background="@drawable/widget_input_background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:contentDescription="@string/content_desc_deepseek"
             android:src="@drawable/ic_launcher" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/chat"
-            android:textColor="@color/widget_text_primary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_weight="1"
+            android:hint="@string/widget_placeholder"
+            android:textColor="@color/widget_text_secondary"
+            android:textColorHint="@color/widget_text_secondary"
+            android:textSize="14sp"
+            android:singleLine="true"
+            android:ellipsize="end" />
 
     </LinearLayout>
 
-    <!-- Horizontal divider (ImageView used instead of View — View is not supported in RemoteViews) -->
+    <!-- Horizontal divider -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginVertical="4dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="@color/widget_divider"

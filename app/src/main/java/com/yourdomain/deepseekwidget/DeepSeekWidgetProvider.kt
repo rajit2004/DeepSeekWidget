@@ -64,12 +64,10 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
         ) {
             val views = RemoteViews(context.packageName, R.layout.deepseek_widget)
 
-            // ── Main area tap → open DeepSeek ──────────────────────────
+            // ── Text input area → InputActivity (text dialog) ─────────────
             views.setOnClickPendingIntent(
-                R.id.widget_root,
-                buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10) {
-                    data = Uri.parse("widget://main/$appWidgetId")
-                }
+                R.id.text_input_area,
+                buildInputActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10)
             )
 
             // ── Mic button → voice trampoline ───────────────────────────
@@ -100,6 +98,20 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             configure: Intent.() -> Unit = {}
         ): PendingIntent {
             val intent = Intent(context, VoiceInputActivity::class.java).apply(configure)
+            return PendingIntent.getActivity(
+                context,
+                requestCode,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+        }
+
+        private fun buildInputActivityIntent(
+            context: Context,
+            appWidgetId: Int,
+            requestCode: Int
+        ): PendingIntent {
+            val intent = Intent(context, InputActivity::class.java)
             return PendingIntent.getActivity(
                 context,
                 requestCode,

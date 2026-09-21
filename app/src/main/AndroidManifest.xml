@@ -58,6 +58,11 @@
             android:exported="false"
             android:theme="@style/Theme.DeepSeekWidget.Transparent" />
 
+        <activity
+            android:name=".InputActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DeepSeekWidget.Transparent" />
+
         <!--
             FileProvider for sharing camera images.
             authority uses ${applicationId} placeholder so it automatically
