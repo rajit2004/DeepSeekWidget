@@ -31,7 +31,6 @@ import java.util.Locale
 class VoiceInputActivity : AppCompatActivity() {
 
     private var currentPhotoPath: String? = null
-    private var pendingPhotoUri: Uri? = null
 
     private val cameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -131,7 +130,6 @@ class VoiceInputActivity : AppCompatActivity() {
             "${packageName}.fileprovider",
             photoFile
         )
-        pendingPhotoUri = photoURI
 
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
             putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
