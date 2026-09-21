@@ -38,7 +38,7 @@
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="#33FFFFFF"
+        android:background="@color/divider"
         android:importantForAccessibility="no" />
 
     <!-- Bottom Row: Camera and Mic buttons -->
@@ -63,7 +63,7 @@
         <ImageView
             android:layout_width="1dp"
             android:layout_height="24dp"
-            android:background="#33FFFFFF"
+            android:background="@color/divider"
             android:importantForAccessibility="no" />
 
         <ImageButton
