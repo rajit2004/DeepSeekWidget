@@ -10,9 +10,9 @@
 # Widget receivers are resolved by name from the manifest.
 -keep class * extends android.appwidget.AppWidgetProvider { *; }
 
-# ── VoiceInputActivity ───────────────────────────────────────
-# Referenced by explicit intent — safe, but keep as a safeguard.
--keep class com.yourdomain.deepseekwidget.VoiceInputActivity { *; }
+# ── App classes ─────────────────────────────────────────────
+# Keep all classes referenced by explicit intents from the manifest.
+-keep class com.yourdomain.deepseekwidget.** { *; }
 
 # ── Kotlin metadata (optional, keeps stack traces readable) ──
 -keepattributes SourceFile,LineNumberTable

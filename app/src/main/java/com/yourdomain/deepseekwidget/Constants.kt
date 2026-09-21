@@ -23,8 +23,4 @@ internal object Constants {
     /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
     const val EXTRA_LAUNCH_VOICE = "LAUNCH_VOICE"
 
-    /**
-     * FileProvider authority — must match android:authorities in AndroidManifest.xml exactly.
-     */
-    const val FILE_PROVIDER_AUTHORITY = "com.yourdomain.deepseekwidget.fileprovider"
 }
