@@ -9,4 +9,5 @@
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen"
     android:previewImage="@drawable/ic_deepseek_whale"
+    android:previewLayout="@layout/deepseek_widget"
     android:description="@string/widget_description" />
