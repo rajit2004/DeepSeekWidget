@@ -1,22 +1,23 @@
 package com.yourdomain.deepseekwidget
 
-import android.app.Activity
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.RECORD_AUDIO
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.speech.RecognizerIntent
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_PACKAGE
-import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_WEB_URL
 import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_CAMERA
 import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_VOICE
 import com.yourdomain.deepseekwidget.Constants.EXTRA_SKIP_VOICE
-
-import androidx.appcompat.app.AppCompatActivity
-import android.provider.MediaStore
-import android.speech.RecognizerIntent
-import androidx.core.content.FileProvider
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -31,11 +32,65 @@ import java.util.Locale
 class VoiceInputActivity : AppCompatActivity() {
 
     private var currentPhotoPath: String? = null
+    private var pendingPhotoUri: Uri? = null
+
+    private val cameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                openCamera()
+            } else {
+                Toast.makeText(this, R.string.perm_camera_denied, Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+
+    private val audioPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                launchSpeechRecognizer()
+            } else {
+                Toast.makeText(this, R.string.perm_audio_denied, Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+
+    private val captureImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                currentPhotoPath?.let { path ->
+                    val file = File(path)
+                    val uri = FileProvider.getUriForFile(
+                        this,
+                        "${packageName}.fileprovider",
+                        file
+                    )
+                    shareToDeepSeek(uri, "image/jpeg")
+                } ?: finish()
+            } else {
+                deleteCurrentPhoto()
+                finish()
+            }
+        }
+
+    private val recognizeSpeechLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val spokenText = result.data
+                    ?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    ?.firstOrNull()
+                if (spokenText != null) {
+                    shareTextToDeepSeek(spokenText)
+                } else {
+                    finish()
+                }
+            } else {
+                finish()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Restore photo path if we're coming back from a process death
         currentPhotoPath = savedInstanceState?.getString(Constants.KEY_PHOTO_PATH)
 
         val launchCamera = intent.getBooleanExtra(EXTRA_LAUNCH_CAMERA, false)
@@ -45,7 +100,6 @@ class VoiceInputActivity : AppCompatActivity() {
         when {
             launchCamera -> startCameraFlow()
             launchVoice  -> startVoiceFlow()
-            skipVoice    -> routeToDeepSeekNative("chat")
             else         -> routeToDeepSeekNative("chat")
         }
     }
@@ -56,93 +110,61 @@ class VoiceInputActivity : AppCompatActivity() {
     }
 
     private fun startCameraFlow() {
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(android.Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
-        } else {
+        if (checkSelfPermission(CAMERA) == PackageManager.PERMISSION_GRANTED) {
             openCamera()
+        } else {
+            cameraPermissionLauncher.launch(CAMERA)
         }
     }
 
     private fun openCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            val photoFile: File? = try {
-                createImageFile()
-            } catch (ex: Exception) {
-                Log.e(TAG, "Error creating image file", ex)
-                null
-            }
-
-            photoFile?.also {
-                val photoURI: Uri = FileProvider.getUriForFile(
-                    this,
-                    "${packageName}.fileprovider",
-                    it
-                )
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            }
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show()
-            finish()
+        val photoFile = try {
+            createImageFile()
+        } catch (ex: Exception) {
+            Log.e(TAG, "Error creating image file", ex)
+            Toast.makeText(this, R.string.camera_file_error, Toast.LENGTH_SHORT).show()
+            null
         }
-    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CAMERA_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                openCamera()
-            } else {
-                Toast.makeText(this, "Camera permission required", Toast.LENGTH_SHORT).show()
-                finish()
-            }
+        photoFile ?: return
+
+        val photoURI = FileProvider.getUriForFile(
+            this,
+            "${packageName}.fileprovider",
+            photoFile
+        )
+        pendingPhotoUri = photoURI
+
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+            putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+        }
+
+        try {
+            captureImageLauncher.launch(takePictureIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, R.string.camera_unavailable, Toast.LENGTH_SHORT).show()
+            deleteCurrentPhoto()
+            finish()
         }
     }
 
     private fun startVoiceFlow() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-            putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to DeepSeek")
-        }
-        try {
-            startActivityForResult(intent, REQUEST_VOICE_RECOGNIZE)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "Voice recognition not supported", Toast.LENGTH_SHORT).show()
-            finish()
+        if (checkSelfPermission(RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+            launchSpeechRecognizer()
+        } else {
+            audioPermissionLauncher.launch(RECORD_AUDIO)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                REQUEST_IMAGE_CAPTURE -> {
-                    currentPhotoPath?.let { path ->
-                        val file = File(path)
-                        val uri = FileProvider.getUriForFile(
-                            this,
-                            "${packageName}.fileprovider",
-                            file
-                        )
-                        shareToDeepSeek(uri, "image/jpeg")
-                    } ?: finish()
-                }
-                REQUEST_VOICE_RECOGNIZE -> {
-                    val results = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    val spokenText = results?.get(0)
-                    if (spokenText != null) {
-                        shareTextToDeepSeek(spokenText)
-                    } else {
-                        finish()
-                    }
-                }
-            }
-        } else {
+    private fun launchSpeechRecognizer() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_prompt))
+        }
+        try {
+            recognizeSpeechLauncher.launch(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, R.string.voice_unavailable, Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -152,15 +174,15 @@ class VoiceInputActivity : AppCompatActivity() {
             setPackage(DEEPSEEK_PACKAGE)
             type = mimeType
             putExtra(Intent.EXTRA_STREAM, contentUri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         try {
             startActivity(shareIntent)
-        } catch (e: Exception) {
+        } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Failed to share to DeepSeek", e)
-            Toast.makeText(this, "DeepSeek app not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.image_share_error, Toast.LENGTH_SHORT).show()
         } finally {
+            deleteCurrentPhoto()
             finish()
         }
     }
@@ -174,17 +196,28 @@ class VoiceInputActivity : AppCompatActivity() {
         }
         try {
             startActivity(shareIntent)
-        } catch (e: Exception) {
+        } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Failed to share text to DeepSeek", e)
-            Toast.makeText(this, "DeepSeek app not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.deepseek_open_error, Toast.LENGTH_SHORT).show()
         } finally {
             finish()
         }
     }
 
+    private fun deleteCurrentPhoto() {
+        currentPhotoPath?.let { path ->
+            try {
+                File(path).delete()
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to delete temp photo: $path", e)
+            }
+            currentPhotoPath = null
+        }
+    }
+
     private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val storageDir: File? = getExternalFilesDir(null)
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir = getExternalFilesDir(null) ?: filesDir
         return File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",
@@ -199,37 +232,28 @@ class VoiceInputActivity : AppCompatActivity() {
      * Uses a combination of custom URI schemes and Package Manager launch intents.
      */
     private fun routeToDeepSeekNative(feature: String) {
-        // DeepSeek app package ID
-        val packageId = DEEPSEEK_PACKAGE
-
-        // Define feature-specific URIs.
-        // DeepSeek app registers for chat.deepseek.com as a verified host.
         val uri = when (feature) {
             "camera" -> Uri.parse("https://chat.deepseek.com/chat?action=camera")
             "voice"  -> Uri.parse("https://chat.deepseek.com/chat?action=voice")
-            else     -> Uri.parse("https://chat.deepseek.com")
+            else     -> Uri.parse(Constants.DEEPSEEK_WEB_URL)
         }
 
         try {
-            // 1. Attempt to find the launch intent for the package.
-            val launchIntent = packageManager.getLaunchIntentForPackage(packageId)
+            val launchIntent = packageManager.getLaunchIntentForPackage(DEEPSEEK_PACKAGE)
 
             if (launchIntent != null) {
-                // 2. Create a specific VIEW intent for the feature.
                 val actionIntent = Intent(Intent.ACTION_VIEW, uri).apply {
-                    setPackage(packageId)
+                    setPackage(DEEPSEEK_PACKAGE)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 }
 
                 try {
                     startActivity(actionIntent)
                 } catch (e: ActivityNotFoundException) {
-                    // 3. If deep link action fails, launch the app's main entry point.
                     launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(launchIntent)
                 }
             } else {
-                // 4. Fallback to Web if app is not installed.
                 launchWebFallback(uri)
             }
         } catch (e: Exception) {
@@ -253,8 +277,5 @@ class VoiceInputActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "VoiceInputActivity"
-        private const val REQUEST_IMAGE_CAPTURE = 1001
-        private const val REQUEST_VOICE_RECOGNIZE = 1002
-        private const val REQUEST_CAMERA_PERMISSION = 1003
     }
 }
