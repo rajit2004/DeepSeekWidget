@@ -31,6 +31,7 @@ import java.util.Locale
 class VoiceInputActivity : AppCompatActivity() {
 
     private var currentPhotoPath: String? = null
+    private lateinit var promptStore: PromptStore
 
     private val cameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -89,6 +90,7 @@ class VoiceInputActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        promptStore = PromptStore(this)
         currentPhotoPath = savedInstanceState?.getString(Constants.KEY_PHOTO_PATH)
 
         val launchCamera = intent.getBooleanExtra(EXTRA_LAUNCH_CAMERA, false)
@@ -171,6 +173,7 @@ class VoiceInputActivity : AppCompatActivity() {
 
     private fun shareToDeepSeek(contentUri: Uri, mimeType: String) {
         window.decorView.announceForAccessibility(getString(R.string.a11y_sending_to_deepseek))
+        promptStore.savePrompt("[Photo shared]")
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             setPackage(DEEPSEEK_PACKAGE)
             type = mimeType
@@ -191,6 +194,7 @@ class VoiceInputActivity : AppCompatActivity() {
 
     private fun shareTextToDeepSeek(text: String) {
         window.decorView.announceForAccessibility(getString(R.string.a11y_sending_to_deepseek))
+        promptStore.savePrompt(text)
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             setPackage(DEEPSEEK_PACKAGE)
             type = "text/plain"

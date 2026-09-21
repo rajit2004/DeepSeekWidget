@@ -9,6 +9,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.RemoteViews
 
 /**
@@ -101,6 +102,15 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                     data = Uri.parse("widget://camera/$appWidgetId")
                 }
             )
+
+            // ── Show last prompt if available ─────────────────────────
+            val lastPrompt = PromptStore(context).getLatestPrompt()
+            if (lastPrompt != null) {
+                views.setViewVisibility(R.id.last_prompt, View.VISIBLE)
+                views.setTextViewText(R.id.last_prompt, lastPrompt)
+            } else {
+                views.setViewVisibility(R.id.last_prompt, View.GONE)
+            }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
