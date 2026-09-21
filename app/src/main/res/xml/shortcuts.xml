@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="summarize"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:shortcutShortLabel="@string/shortcut_summarize_label"
+        android:shortcutLongLabel="@string/shortcut_summarize_long">
+        <intent
+            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.yourdomain.deepseekwidget"
+            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+        <extra
+            android:name="EXTRA_PROMPT_PREFIX"
+            android:value="Summarize the following:\n\n" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="translate"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:shortcutShortLabel="@string/shortcut_translate_label"
+        android:shortcutLongLabel="@string/shortcut_translate_long">
+        <intent
+            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.yourdomain.deepseekwidget"
+            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+        <extra
+            android:name="EXTRA_PROMPT_PREFIX"
+            android:value="Translate this to English:\n\n" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="explain_code"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:shortcutShortLabel="@string/shortcut_explain_label"
+        android:shortcutLongLabel="@string/shortcut_explain_long">
+        <intent
+            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.yourdomain.deepseekwidget"
+            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+        <extra
+            android:name="EXTRA_PROMPT_PREFIX"
+            android:value="Explain this code:\n\n" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="write_email"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:shortcutShortLabel="@string/shortcut_email_label"
+        android:shortcutLongLabel="@string/shortcut_email_long">
+        <intent
+            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.yourdomain.deepseekwidget"
+            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+        <extra
+            android:name="EXTRA_PROMPT_PREFIX"
+            android:value="Write a professional email about:\n\n" />
+    </shortcut>
+
+</shortcuts>

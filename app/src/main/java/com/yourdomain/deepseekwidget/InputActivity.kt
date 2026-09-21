@@ -20,8 +20,15 @@ class InputActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val promptPrefix = intent?.getStringExtra(LauncherActivity.EXTRA_PROMPT_PREFIX)
+
         val inputView = layoutInflater.inflate(R.layout.dialog_input, null)
         val editText = inputView.findViewById<EditText>(R.id.input_field)
+
+        if (promptPrefix != null) {
+            editText.setText(promptPrefix)
+            editText.setSelection(promptPrefix.length)
+        }
 
         AlertDialog.Builder(this, R.style.Theme_DeepSeekWidget_Dialog)
             .setTitle(R.string.input_dialog_title)

@@ -63,6 +63,22 @@
             android:exported="false"
             android:theme="@style/Theme.DeepSeekWidget.Transparent" />
 
+        <!-- Launcher activity (anchors static shortcuts) -->
+        <activity
+            android:name=".LauncherActivity"
+            android:exported="true"
+            android:theme="@style/Theme.DeepSeekWidget.Transparent"
+            android:excludeFromRecents="true"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+
         <!--
             FileProvider for sharing camera images.
             authority uses ${applicationId} placeholder so it automatically

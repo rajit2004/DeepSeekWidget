@@ -39,4 +39,14 @@
     <string name="input_send">Send</string>
     <string name="input_cancel">Cancel</string>
     <string name="content_desc_text_input">Type a message to send to DeepSeek</string>
+
+    <!-- Quick prompt shortcuts -->
+    <string name="shortcut_summarize_label">Summarize</string>
+    <string name="shortcut_summarize_long">Summarize text with DeepSeek</string>
+    <string name="shortcut_translate_label">Translate</string>
+    <string name="shortcut_translate_long">Translate text with DeepSeek</string>
+    <string name="shortcut_explain_label">Explain Code</string>
+    <string name="shortcut_explain_long">Explain code with DeepSeek</string>
+    <string name="shortcut_email_label">Write Email</string>
+    <string name="shortcut_email_long">Draft an email with DeepSeek</string>
 </resources>

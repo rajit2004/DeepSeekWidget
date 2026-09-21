@@ -1,0 +1,31 @@
+package com.yourdomain.deepseekwidget
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+
+/**
+ * Minimal launcher activity that anchors static shortcuts.
+ * Immediately forwards to [InputActivity] with any prompt prefix.
+ */
+class LauncherActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val promptPrefix = intent?.getStringExtra(EXTRA_PROMPT_PREFIX)
+
+        val inputIntent = Intent(this, InputActivity::class.java).apply {
+            if (promptPrefix != null) {
+                putExtra(EXTRA_PROMPT_PREFIX, promptPrefix)
+            }
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        startActivity(inputIntent)
+        finish()
+    }
+
+    companion object {
+        const val EXTRA_PROMPT_PREFIX = "EXTRA_PROMPT_PREFIX"
+    }
+}
