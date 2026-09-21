@@ -83,13 +83,6 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
             )
 
-            // ── Apply teal tint programmatically ─────────────────────────────
-            // app:tint is an AppCompat attribute — unsupported in RemoteViews.
-            // setColorFilter via reflection is the correct way.
-            val teal = 0xFF00D4AA.toInt()
-            views.setInt(R.id.mic_button, "setColorFilter", teal)
-            views.setInt(R.id.camera_button, "setColorFilter", teal)
-
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
