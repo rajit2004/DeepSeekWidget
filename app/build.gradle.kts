@@ -1,6 +1,16 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+}
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        load(FileInputStream(keystorePropertiesFile))
+    }
 }
 
 android {
@@ -33,13 +43,16 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // To sign a release APK with a production keystore:
-            //   1. Generate a keystore: Build → Generate Signed Bundle/APK
-            //   2. Store credentials in keystore.properties (already in .gitignore)
-            //   3. Read them here via:
-            //      val keystoreProps = Properties().apply { load(rootProject.file("keystore.properties").inputStream()) }
-            //      signingConfig = signingConfigs.create("release") { ... }
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (keystorePropertiesFile.exists()) {
+                signingConfigs.create("release") {
+                    storeFile = rootProject.file(keystoreProperties["storeFile"] as String)
+                    storePassword = keystoreProperties["storePassword"] as String
+                    keyAlias = keystoreProperties["keyAlias"] as String
+                    keyPassword = keystoreProperties["keyPassword"] as String
+                }
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 
