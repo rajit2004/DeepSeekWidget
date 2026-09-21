@@ -49,4 +49,10 @@
     <string name="shortcut_explain_long">Explain code with DeepSeek</string>
     <string name="shortcut_email_label">Write Email</string>
     <string name="shortcut_email_long">Draft an email with DeepSeek</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_name">Processing</string>
+    <string name="notification_channel_description">Shows status while voice or camera is processing</string>
+    <string name="notification_voice_processing">Listening for voice input…</string>
+    <string name="notification_camera_processing">Capturing photo…</string>
 </resources>

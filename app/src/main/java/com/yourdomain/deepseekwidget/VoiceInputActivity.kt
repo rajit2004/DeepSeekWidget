@@ -136,6 +136,7 @@ class VoiceInputActivity : AppCompatActivity() {
         }
 
         try {
+            NotificationHelper.showProcessingNotification(this, getString(R.string.notification_camera_processing))
             window.decorView.announceForAccessibility(getString(R.string.a11y_camera_capturing))
             captureImageLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
@@ -159,6 +160,7 @@ class VoiceInputActivity : AppCompatActivity() {
             putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.voice_prompt))
         }
         try {
+            NotificationHelper.showProcessingNotification(this, getString(R.string.notification_voice_processing))
             window.decorView.announceForAccessibility(getString(R.string.a11y_voice_listening))
             recognizeSpeechLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
@@ -181,6 +183,7 @@ class VoiceInputActivity : AppCompatActivity() {
             Log.e(TAG, "Failed to share to DeepSeek", e)
             Toast.makeText(this, R.string.image_share_error, Toast.LENGTH_SHORT).show()
         } finally {
+            NotificationHelper.dismissNotification(this)
             deleteCurrentPhoto()
             finish()
         }
@@ -200,6 +203,7 @@ class VoiceInputActivity : AppCompatActivity() {
             Log.e(TAG, "Failed to share text to DeepSeek", e)
             Toast.makeText(this, R.string.deepseek_open_error, Toast.LENGTH_SHORT).show()
         } finally {
+            NotificationHelper.dismissNotification(this)
             finish()
         }
     }
@@ -261,6 +265,7 @@ class VoiceInputActivity : AppCompatActivity() {
             Log.e(TAG, "Routing to DeepSeek failed", e)
             launchWebFallback(uri)
         } finally {
+            NotificationHelper.dismissNotification(this)
             finish()
         }
     }
