@@ -3,6 +3,7 @@ package com.yourdomain.deepseekwidget
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -15,9 +16,20 @@ import android.widget.RemoteViews
  * Responsibilities:
  *  - Inflate and bind [RemoteViews] for every placed widget instance.
  *  - Attach [PendingIntent]s for the three tap targets: root, mic, camera.
- *  - Apply icon tints programmatically (avoids unsupported [app:tint] in RemoteViews).
+ *  - Rebuild widgets on system configuration changes (e.g., dark mode toggle).
  */
 class DeepSeekWidgetProvider : AppWidgetProvider() {
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action == Intent.ACTION_CONFIGURATION_CHANGED) {
+            val appWidgetManager = AppWidgetManager.getInstance(context)
+            val ids = appWidgetManager.getAppWidgetIds(
+                ComponentName(context, DeepSeekWidgetProvider::class.java)
+            )
+            onUpdate(context, appWidgetManager, ids)
+        }
+    }
 
     override fun onUpdate(
         context: Context,
@@ -32,14 +44,11 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         super.onDeleted(context, appWidgetIds)
         Log.d(TAG, "onDeleted: ${appWidgetIds.size} instance(s) removed")
-        // No persistent state to clean up in v1.0.
-        // Future: clear any SharedPreferences keyed by appWidgetId here.
     }
 
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Log.d(TAG, "onDisabled: last widget instance removed")
-        // Future: cancel WorkManager tasks or alarms here.
     }
 
     companion object {
@@ -47,7 +56,6 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
 
         /**
          * Builds or refreshes the [RemoteViews] for a single widget instance.
-         * Called both from [onUpdate] and from any future configuration activity.
          */
         internal fun updateAppWidget(
             context: Context,
@@ -56,7 +64,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
         ) {
             val views = RemoteViews(context.packageName, R.layout.deepseek_widget)
 
-            // ── Main area tap → open DeepSeek (skip voice) ──────────────────
+            // ── Main area tap → open DeepSeek ──────────────────────────
             views.setOnClickPendingIntent(
                 R.id.widget_root,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10) {
@@ -64,7 +72,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
             )
 
-            // ── Mic button → native voice trampoline ───────────────────────
+            // ── Mic button → voice trampoline ───────────────────────────
             views.setOnClickPendingIntent(
                 R.id.mic_button,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10 + 1) {
@@ -73,7 +81,7 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
                 }
             )
 
-            // ── Camera button → camera capture trampoline ────────────────────
+            // ── Camera button → camera trampoline ───────────────────────
             views.setOnClickPendingIntent(
                 R.id.camera_button,
                 buildActivityIntent(context, appWidgetId, requestCode = appWidgetId * 10 + 2) {
@@ -85,13 +93,6 @@ class DeepSeekWidgetProvider : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
-        /**
-         * Creates a [PendingIntent] that launches [VoiceInputActivity] with optional
-         * intent customization via [configure].
-         *
-         * Each button uses a unique [requestCode] so Android does not collapse distinct
-         * intents into the same cached [PendingIntent].
-         */
         private fun buildActivityIntent(
             context: Context,
             appWidgetId: Int,

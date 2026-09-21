@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/chat"
-            android:textColor="@color/white"
+            android:textColor="@color/widget_text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/divider"
+        android:background="@color/widget_divider"
         android:importantForAccessibility="no" />
 
     <!-- Bottom Row: Camera and Mic buttons -->
@@ -63,7 +63,7 @@
         <ImageView
             android:layout_width="1dp"
             android:layout_height="24dp"
-            android:background="@color/divider"
+            android:background="@color/widget_divider"
             android:importantForAccessibility="no" />
 
         <ImageButton

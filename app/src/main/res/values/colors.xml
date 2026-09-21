@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Semantic widget colors (light mode = dark theme, matching current design) -->
+    <color name="widget_background">@color/dark_blue</color>
+    <color name="widget_text_primary">@color/white</color>
+    <color name="widget_text_secondary">#B3FFFFFF</color>
+    <color name="widget_divider">#33FFFFFF</color>
+    <color name="widget_icon">@color/teal</color>
+
+    <!-- Base colors -->
     <color name="white">#FFFFFF</color>
     <color name="dark_blue">#FF1C1C4A</color>
     <color name="teal">#FF00D4AA</color>
