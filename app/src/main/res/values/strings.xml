@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DeepSeek Widget</string>
+    <string name="app_name">DeepSeek Widget — AI Chat</string>
     <string name="widget_placeholder">Ask DeepSeek anything…</string>
-    <string name="widget_description">One‑tap access to DeepSeek AI chat</string>
+    <string name="widget_description">One‑tap AI chat, voice, and camera from your home screen. Ask questions, take photos, or speak to DeepSeek instantly.</string>
     <string name="chat">Chat</string>
 
     <!-- Content descriptions for accessibility / TalkBack -->

@@ -31,6 +31,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepSeekWidget">
 
+        <meta-data
+            android:name="android.app_summary"
+            android:resource="@string/widget_description" />
+
         <!-- Widget provider -->
         <receiver
             android:name=".DeepSeekWidgetProvider"
