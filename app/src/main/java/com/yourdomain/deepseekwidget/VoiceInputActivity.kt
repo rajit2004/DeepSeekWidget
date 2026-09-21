@@ -17,7 +17,6 @@ import androidx.core.content.FileProvider
 import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_PACKAGE
 import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_CAMERA
 import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_VOICE
-import com.yourdomain.deepseekwidget.Constants.EXTRA_SKIP_VOICE
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -95,7 +94,6 @@ class VoiceInputActivity : AppCompatActivity() {
 
         val launchCamera = intent.getBooleanExtra(EXTRA_LAUNCH_CAMERA, false)
         val launchVoice = intent.getBooleanExtra(EXTRA_LAUNCH_VOICE, false)
-        val skipVoice = intent.getBooleanExtra(EXTRA_SKIP_VOICE, false)
 
         when {
             launchCamera -> startCameraFlow()

@@ -22,5 +22,4 @@ internal object Constants {
 
     /** Extra key sent from [DeepSeekWidgetProvider] to [VoiceInputActivity]. */
     const val EXTRA_LAUNCH_VOICE = "LAUNCH_VOICE"
-
 }
