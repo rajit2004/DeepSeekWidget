@@ -11,5 +11,7 @@ Features:
 - Light/Dark Theme: Follows your system theme
 - Resizable Widget: Works at 2x2, 4x1, 2x4, and other sizes
 - Lightweight: Around 1.5 MB, no background services, no battery drain
-- Privacy First: No data collected. Just a router to the official DeepSeek app.
+- Privacy First: No data collected. Just a router to the official DeepSeek app. Backup disabled.
 - Open Source: MIT licensed, fully auditable code.
+
+Requires the official DeepSeek app for full functionality. If it is not installed, text is copied to the clipboard and the web chat opens instead.

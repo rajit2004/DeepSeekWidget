@@ -1,0 +1,1 @@
+New app ID (com.rajit2004.deepseekwidget). Share fallbacks with copy to clipboard when DeepSeek is missing. Widget refreshes after each send. Compact layout on narrow sizes. Prompt history with resend and clear. No INTERNET permission, backup disabled.
