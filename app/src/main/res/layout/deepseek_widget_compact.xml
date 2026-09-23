@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="@dimen/widget_padding"
+    android:background="@drawable/widget_background"
+    android:contentDescription="@string/widget_content_description">
+
+    <!-- Text input area -->
+    <TextView
+        android:id="@+id/text_input_area"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/widget_text_hint"
+        android:textSize="14sp"
+        android:textColor="@color/text_primary"
+        android:padding="@dimen/widget_input_padding"
+        android:background="@drawable/input_background"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Camera button -->
+    <ImageButton
+        android:id="@+id/camera_button"
+        android:layout_width="@dimen/widget_button_size"
+        android:layout_height="@dimen/widget_button_size"
+        android:layout_marginStart="@dimen/widget_button_spacing"
+        android:src="@drawable/ic_camera"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/camera_button_description"
+        android:scaleType="centerInside"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Mic button -->
+    <ImageButton
+        android:id="@+id/mic_button"
+        android:layout_width="@dimen/widget_button_size"
+        android:layout_height="@dimen/widget_button_size"
+        android:layout_marginStart="@dimen/widget_button_spacing"
+        android:src="@drawable/ic_mic"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/mic_button_description"
+        android:scaleType="centerInside"
+        android:clickable="true"
+        android:focusable="true" />
+
+</LinearLayout>

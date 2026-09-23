@@ -21,6 +21,19 @@
     <string name="voice_prompt">What would you like to ask DeepSeek?</string>
     <string name="image_share_error">Could not send image to DeepSeek</string>
     <string name="deepseek_open_error">Could not open DeepSeek</string>
+    <string name="deepseek_fallback_copied">DeepSeek app not found. Text copied, web chat opened instead.</string>
+    <string name="photo_shared_label">[Photo shared]</string>
+    <string name="copied">Copied</string>
+
+    <string name="prefix_summarize">Summarize the following:\n\n</string>
+    <string name="prefix_translate">Translate this to English:\n\n</string>
+    <string name="prefix_explain">Explain this code:\n\n</string>
+    <string name="prefix_email">Write a professional email about:\n\n</string>
+
+    <string name="history_title">Recent prompts</string>
+    <string name="history_empty">No prompts yet. Send something to DeepSeek first.</string>
+    <string name="history_clear">Clear</string>
+    <string name="history_cleared">History cleared</string>
 
     <string name="notification_channel_name">Processing</string>
     <string name="notification_channel_description">Shows while sending data to DeepSeek</string>

@@ -12,3 +12,9 @@
 # Kotlin metadata (keeps stack traces readable)
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile
+
+# Strip verbose/debug logs in release builds
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+}

@@ -171,18 +171,20 @@ class VoiceInputActivity : AppCompatActivity() {
 
     private fun shareToDeepSeek(contentUri: Uri, mimeType: String) {
         window.decorView.announceForAccessibility(getString(R.string.a11y_sending_to_deepseek))
-        promptStore.savePrompt("[Photo shared]")
+        promptStore.savePrompt(getString(R.string.photo_shared_label))
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             setPackage(DEEPSEEK_PACKAGE)
             type = mimeType
             putExtra(Intent.EXTRA_STREAM, contentUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+            clipData = android.content.ClipData.newUri(contentResolver, "photo", contentUri)
         }
         try {
             startActivity(shareIntent)
         } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Failed to share to DeepSeek", e)
-            Toast.makeText(this, R.string.image_share_error, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.image_share_error, Toast.LENGTH_LONG).show()
+            ShareHelper.openWebChat(this)
         } finally {
             NotificationHelper.dismissNotification(this)
             deleteCurrentPhoto()
@@ -203,7 +205,7 @@ class VoiceInputActivity : AppCompatActivity() {
             startActivity(shareIntent)
         } catch (e: ActivityNotFoundException) {
             Log.e(TAG, "Failed to share text to DeepSeek", e)
-            Toast.makeText(this, R.string.deepseek_open_error, Toast.LENGTH_SHORT).show()
+            ShareHelper.fallbackTextShare(this, text)
         } finally {
             NotificationHelper.dismissNotification(this)
             finish()
@@ -269,14 +271,7 @@ class VoiceInputActivity : AppCompatActivity() {
     }
 
     private fun launchWebFallback(uri: Uri) {
-        try {
-            val webIntent = Intent(Intent.ACTION_VIEW, uri).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            startActivity(webIntent)
-        } catch (e: Exception) {
-            Toast.makeText(this, R.string.deepseek_open_error, Toast.LENGTH_SHORT).show()
-        }
+        ShareHelper.openWebChat(this, uri)
     }
 
     companion object {
