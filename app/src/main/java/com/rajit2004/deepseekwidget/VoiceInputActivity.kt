@@ -54,15 +54,28 @@ class VoiceInputActivity : AppCompatActivity() {
     private val captureImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                currentPhotoPath?.let { path ->
-                    val file = File(path)
-                    val uri = FileProvider.getUriForFile(
-                        this,
-                        "${packageName}.fileprovider",
-                        file
-                    )
-                    shareToDeepSeek(uri, "image/jpeg")
-                } ?: finish()
+                val path = currentPhotoPath
+                val file = path?.let { File(it) }
+                if (file == null || !file.exists() || file.length() == 0L) {
+                    Log.w(TAG, "Camera returned OK but image file is missing or empty")
+                    Toast.makeText(this, R.string.camera_file_error, Toast.LENGTH_SHORT).show()
+                    deleteCurrentPhoto()
+                    finish()
+                    return@registerForActivityResult
+                }
+                if (file.length() > MAX_PHOTO_BYTES) {
+                    Log.w(TAG, "Camera image too large: ${file.length()}")
+                    Toast.makeText(this, R.string.camera_file_error, Toast.LENGTH_SHORT).show()
+                    deleteCurrentPhoto()
+                    finish()
+                    return@registerForActivityResult
+                }
+                val uri = FileProvider.getUriForFile(
+                    this,
+                    "${packageName}.fileprovider",
+                    file
+                )
+                shareToDeepSeek(uri, "image/jpeg")
             } else {
                 deleteCurrentPhoto()
                 finish()
@@ -123,7 +136,10 @@ class VoiceInputActivity : AppCompatActivity() {
             null
         }
 
-        photoFile ?: return
+        if (photoFile == null) {
+            finish()
+            return
+        }
 
         val photoURI = FileProvider.getUriForFile(
             this,
@@ -276,5 +292,6 @@ class VoiceInputActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "VoiceInputActivity"
+        private const val MAX_PHOTO_BYTES = 15L * 1024L * 1024L
     }
 }

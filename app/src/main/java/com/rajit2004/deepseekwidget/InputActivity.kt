@@ -4,8 +4,8 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.rajit2004.deepseekwidget.Constants.DEEPSEEK_PACKAGE
@@ -18,52 +18,53 @@ import com.rajit2004.deepseekwidget.Constants.LEGACY_EXTRA_PROMPT_PREFIX
  */
 class InputActivity : AppCompatActivity() {
 
-    private var draftText: String? = null
+    private var editText: EditText? = null
     private lateinit var promptStore: PromptStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         promptStore = PromptStore(this)
-        draftText = savedInstanceState?.getString(KEY_DRAFT)
 
         val promptPrefix = intent?.getStringExtra(EXTRA_PROMPT_PREFIX)
             ?: intent?.getStringExtra(LEGACY_EXTRA_PROMPT_PREFIX)
             ?: intent?.getStringExtra(LauncherActivity.EXTRA_PROMPT_PREFIX)
 
         val inputView = layoutInflater.inflate(R.layout.dialog_input, null)
-        val editText = inputView.findViewById<EditText>(R.id.input_field)
+        val field = inputView.findViewById<EditText>(R.id.input_field)
+        editText = field
 
-        val initialText = draftText ?: promptPrefix
+        val initialText = savedInstanceState?.getString(KEY_DRAFT) ?: promptPrefix
         if (initialText != null) {
-            editText.setText(initialText)
-            editText.setSelection(initialText.length)
+            field.setText(initialText)
+            field.setSelection(initialText.length)
         }
 
-        editText.setOnEditorActionListener { v, _, _ ->
-            val text = v.text.toString().trim()
-            if (text.isNotEmpty()) {
-                draftText = null
-                shareTextToDeepSeek(text)
+        field.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                val text = v.text.toString().trim()
+                if (text.isNotEmpty()) {
+                    shareTextToDeepSeek(text)
+                } else {
+                    finish()
+                }
+                true
             } else {
-                finish()
+                false
             }
-            true
         }
 
         AlertDialog.Builder(this, R.style.Theme_DeepSeekWidget_Dialog)
             .setTitle(R.string.input_dialog_title)
             .setView(inputView)
             .setPositiveButton(R.string.input_send) { _, _ ->
-                val text = editText.text.toString().trim()
+                val text = editText?.text.toString().trim()
                 if (text.isNotEmpty()) {
-                    draftText = null
                     shareTextToDeepSeek(text)
                 } else {
                     finish()
                 }
             }
             .setNegativeButton(R.string.input_cancel) { _, _ ->
-                draftText = editText.text.toString()
                 finish()
             }
             .setOnCancelListener {
@@ -74,7 +75,7 @@ class InputActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_DRAFT, draftText)
+        outState.putString(KEY_DRAFT, editText?.text?.toString())
     }
 
     private fun shareTextToDeepSeek(text: String) {
