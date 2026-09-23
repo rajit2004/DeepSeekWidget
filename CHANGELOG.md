@@ -7,6 +7,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- Prompt history screen (tap history to resend, long-press to copy, one-tap clear)
+- Share fallbacks: text is copied to clipboard and web chat opens when DeepSeek is missing
+- Compact widget layout for narrow sizes (history hidden under 180dp)
+- Robolectric unit tests for PromptStore, wired into CI
+- Fastlane changelog for the next release
+- Notification icon asset and Trophy troubleshooting section in README
+
+### Fixed
+- Widget now refreshes right after every send instead of going stale
+- PendingIntents use FLAG_UPDATE_CURRENT with unique data URIs per widget and action
+- Camera flow finishes cleanly when file creation fails and rejects empty/oversize captures
+- Input dialog keeps draft text across rotation and sends via keyboard action
+- PromptStore ignores blanks and consecutive duplicates
+
+### Changed
+- Package renamed to com.rajit2004.deepseekwidget (new app ID, clean install required)
+- INTERNET permission removed, backup disabled, notifications guarded on Android 13+
+- Shortcut extras use fully qualified keys with legacy fallback
+- Themes migrated to Material 3
+- Debug logs stripped in release builds via R8
+- CI now runs unit tests and lintRelease with test reports uploaded
+
 ---
 
 ## [2.0] - 2026-09-21

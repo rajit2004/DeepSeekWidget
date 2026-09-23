@@ -30,10 +30,13 @@
 | **Camera-to-Chat** | Take a photo and send it to DeepSeek for analysis |
 | **Text Input** | Tap the text field, type a question, send it off |
 | **Quick Prompts** | Pre-built shortcuts: Summarize, Translate, Explain Code, Write Email |
-| **Light/Dark Theme** | Follows your system theme |
+| **Prompt History** | Last 5 prompts saved, tap to resend, long-press to copy, one-tap clear |
+| **Missing-App Fallback** | If DeepSeek is not installed, text is copied and web chat opens |
+| **Compact Layout** | Narrow sizes hide history and keep the three core actions |
+| **Light/Dark Theme** | Follows your system theme (Material 3) |
 | **Resizable Widget** | Works at 2x2, 4x1, 2x4, and other sizes |
 | **Lightweight** | Around 1.5 MB APK, no background services, no battery drain |
-| **Privacy First** | No data collected. Just a router to the official DeepSeek app |
+| **Privacy First** | No data collected, no network calls, no backup. Just a router to the official DeepSeek app |
 
 ---
 
@@ -48,9 +51,10 @@ Widget tap
     +-- [Camera btn] --> Camera intent --> photo -----> DeepSeek
 ```
 
-- `FileProvider` shares camera images securely
-- `PendingIntent` uses `FLAG_IMMUTABLE` for Android 12+ compliance
-- Unique request codes per widget instance prevent PendingIntent collisions
+- `FileProvider` shares camera images securely (empty/oversize captures are rejected)
+- `PendingIntent` uses `FLAG_UPDATE_CURRENT | FLAG_IMMUTABLE` with unique data URIs per widget and action
+- Widget refreshes automatically after every send via `ShareHelper.refreshWidgets`
+- Notifications are skipped when `POST_NOTIFICATIONS` is not granted (Android 13+)
 
 ---
 
@@ -61,7 +65,7 @@ Widget tap
 | Language | Kotlin 2.0 |
 | Architecture | Trampoline Activity + Intent Routing |
 | Security | FileProvider (Scoped Storage) |
-| UI | XML RemoteViews + Material Components |
+| UI | XML RemoteViews + Material 3 |
 | Minimum SDK | Android 8.0 (API 26) |
 | Target SDK | Android 15 (API 35) |
 | Build | Gradle KTS + R8 shrinking |
@@ -73,21 +77,25 @@ Widget tap
 ```
 DeepSeekWidget/
 ├── app/src/main/
-│   ├── java/com/yourdomain/deepseekwidget/
+│   ├── java/com/rajit2004/deepseekwidget/
 │   │   ├── Constants.kt              -- Package IDs, intent extras
 │   │   ├── DeepSeekWidgetProvider.kt -- Widget lifecycle, RemoteViews, PendingIntents
 │   │   ├── VoiceInputActivity.kt     -- Camera + voice capture logic
 │   │   ├── InputActivity.kt          -- Text input dialog
+│   │   ├── HistoryActivity.kt        -- Recent prompts list
+│   │   ├── ShareHelper.kt            -- Clipboard, web fallback, widget refresh
 │   │   ├── NotificationHelper.kt     -- Processing notifications
 │   │   └── PromptStore.kt            -- Recent prompts storage
-│   └── res/
-│       ├── drawable/                  -- Icons, backgrounds, adaptive icon layers
-│       ├── layout/                    -- Widget layout + dialog layout
-│       ├── mipmap-anydpi-v26/         -- Adaptive launcher icon
-│       ├── values/                    -- colors, strings, themes
-│       ├── values-night/              -- Dark theme colors
-│       └── xml/                       -- Widget info, shortcuts, FileProvider paths
-├── build.gradle.kts
+│   ├── res/
+│   │   ├── drawable/                  -- Icons, backgrounds, adaptive icon layers
+│   │   ├── layout/                    -- Widget, compact widget, dialog layouts
+│   │   ├── mipmap-anydpi-v26/         -- Adaptive launcher icon
+│   │   ├── values/                    -- colors, strings, themes
+│   │   ├── values-night/              -- Dark theme colors
+│   │   └── xml/                       -- Widget info, shortcuts, FileProvider paths
+│   └── AndroidManifest.xml
+├── app/src/test/                     -- Robolectric unit tests (PromptStore)
+├── fastlane/metadata/android/en-US/  -- Store listing + changelogs
 └── README.md
 ```
 
@@ -101,6 +109,20 @@ cd DeepSeekWidget
 ./gradlew assembleDebug
 # Output: app/build/outputs/apk/debug/app-debug.apk
 ```
+
+Run tests with `./gradlew testDebugUnitTest`.
+
+---
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| DeepSeek app not installed | The widget copies your text and opens web chat instead |
+| Widget does not update | Remove and re-add the widget, then send one prompt to refresh |
+| Camera shows an error | Check camera permission, free up storage, try again |
+| Voice input missing | Install a speech recognition app (e.g. Google app) and grant mic permission |
+| No notification shown | Grant notification permission on Android 13+, or ignore, it is only a progress hint |
 
 ---
 
