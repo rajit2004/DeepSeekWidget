@@ -8,12 +8,12 @@
         android:shortcutShortLabel="@string/shortcut_summarize_label"
         android:shortcutLongLabel="@string/shortcut_summarize_long">
         <intent
-            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
-            android:targetPackage="com.yourdomain.deepseekwidget"
-            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+            android:action="com.rajit2004.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.rajit2004.deepseekwidget"
+            android:targetClass="com.rajit2004.deepseekwidget.InputActivity" />
         <extra
-            android:name="EXTRA_PROMPT_PREFIX"
-            android:value="Summarize the following:\n\n" />
+            android:name="com.rajit2004.deepseekwidget.EXTRA_PROMPT_PREFIX"
+            android:value="@string/prefix_summarize" />
     </shortcut>
 
     <shortcut
@@ -23,12 +23,12 @@
         android:shortcutShortLabel="@string/shortcut_translate_label"
         android:shortcutLongLabel="@string/shortcut_translate_long">
         <intent
-            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
-            android:targetPackage="com.yourdomain.deepseekwidget"
-            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+            android:action="com.rajit2004.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.rajit2004.deepseekwidget"
+            android:targetClass="com.rajit2004.deepseekwidget.InputActivity" />
         <extra
-            android:name="EXTRA_PROMPT_PREFIX"
-            android:value="Translate this to English:\n\n" />
+            android:name="com.rajit2004.deepseekwidget.EXTRA_PROMPT_PREFIX"
+            android:value="@string/prefix_translate" />
     </shortcut>
 
     <shortcut
@@ -38,12 +38,12 @@
         android:shortcutShortLabel="@string/shortcut_explain_label"
         android:shortcutLongLabel="@string/shortcut_explain_long">
         <intent
-            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
-            android:targetPackage="com.yourdomain.deepseekwidget"
-            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+            android:action="com.rajit2004.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.rajit2004.deepseekwidget"
+            android:targetClass="com.rajit2004.deepseekwidget.InputActivity" />
         <extra
-            android:name="EXTRA_PROMPT_PREFIX"
-            android:value="Explain this code:\n\n" />
+            android:name="com.rajit2004.deepseekwidget.EXTRA_PROMPT_PREFIX"
+            android:value="@string/prefix_explain" />
     </shortcut>
 
     <shortcut
@@ -53,12 +53,12 @@
         android:shortcutShortLabel="@string/shortcut_email_label"
         android:shortcutLongLabel="@string/shortcut_email_long">
         <intent
-            android:action="com.yourdomain.deepseekwidget.action.QUICK_PROMPT"
-            android:targetPackage="com.yourdomain.deepseekwidget"
-            android:targetClass="com.yourdomain.deepseekwidget.InputActivity" />
+            android:action="com.rajit2004.deepseekwidget.action.QUICK_PROMPT"
+            android:targetPackage="com.rajit2004.deepseekwidget"
+            android:targetClass="com.rajit2004.deepseekwidget.InputActivity" />
         <extra
-            android:name="EXTRA_PROMPT_PREFIX"
-            android:value="Write a professional email about:\n\n" />
+            android:name="com.rajit2004.deepseekwidget.EXTRA_PROMPT_PREFIX"
+            android:value="@string/prefix_email" />
     </shortcut>
 
 </shortcuts>

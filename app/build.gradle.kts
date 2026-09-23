@@ -14,11 +14,11 @@ val keystoreProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.yourdomain.deepseekwidget"
+    namespace = "com.rajit2004.deepseekwidget"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.yourdomain.deepseekwidget"
+        applicationId = "com.rajit2004.deepseekwidget"
         minSdk = 26
         targetSdk = 35
         versionCode = 3

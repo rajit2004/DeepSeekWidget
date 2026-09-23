@@ -7,7 +7,7 @@
 -keep class * extends android.appwidget.AppWidgetProvider { *; }
 
 # App classes - Keep all classes referenced by explicit intents from the manifest
--keep class com.yourdomain.deepseekwidget.** { *; }
+-keep class com.rajit2004.deepseekwidget.** { *; }
 
 # Kotlin metadata (keeps stack traces readable)
 -keepattributes SourceFile,LineNumberTable

@@ -1,4 +1,4 @@
-package com.yourdomain.deepseekwidget
+package com.rajit2004.deepseekwidget
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.RECORD_AUDIO
@@ -14,9 +14,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_PACKAGE
-import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_CAMERA
-import com.yourdomain.deepseekwidget.Constants.EXTRA_LAUNCH_VOICE
+import com.rajit2004.deepseekwidget.Constants.DEEPSEEK_PACKAGE
+import com.rajit2004.deepseekwidget.Constants.EXTRA_LAUNCH_CAMERA
+import com.rajit2004.deepseekwidget.Constants.EXTRA_LAUNCH_VOICE
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date

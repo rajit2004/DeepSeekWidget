@@ -1,4 +1,4 @@
-package com.yourdomain.deepseekwidget
+package com.rajit2004.deepseekwidget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager

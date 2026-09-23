@@ -1,4 +1,4 @@
-package com.yourdomain.deepseekwidget
+package com.rajit2004.deepseekwidget
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.yourdomain.deepseekwidget.Constants.DEEPSEEK_PACKAGE
+import com.rajit2004.deepseekwidget.Constants.DEEPSEEK_PACKAGE
 
 /**
  * Shows a text input dialog when the user taps the widget's text field.
