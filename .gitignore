@@ -47,3 +47,6 @@ ehthumbs.db
 # ── Logs ─────────────────────────────────────────────────────
 *.log
 captures/
+
+# ── Stray root binaries ────────────────────────────────────────
+/deepseekwidget
